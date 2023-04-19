@@ -14,10 +14,10 @@ public class MemberAccountController {
     private IMemberAccountService accountService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String register(MemberAccount memberAccount){
+    public Integer register(MemberAccount newMemberAccount){
 
-        String registerResult = accountService.register(memberAccount);
-        return registerResult;
+        String registerResult = accountService.register(newMemberAccount);
+        return newMemberAccount.getId();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
