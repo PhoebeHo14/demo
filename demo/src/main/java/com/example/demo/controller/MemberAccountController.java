@@ -21,7 +21,8 @@ public class MemberAccountController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public  String login(){
+    public  String login(MemberAccount memberAccount){
+
 
         return "Login Success";
     }

@@ -18,7 +18,7 @@ public class MemberAccountService implements IMemberAccountService {
 
         MemberAccount newMember = new MemberAccount();
         String encodedPassword = BCrypt.hashpw(memberAccount.getPassword(), BCrypt.gensalt());
-        newMember.setAccount(memberAccount.getAccount());
+        newMember.setUsername(memberAccount.getUsername());
         newMember.setPassword(encodedPassword);
 
         memberAccountRepository.save(newMember);
