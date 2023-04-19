@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.MemberAccount;
 
-public interface MemberAccountService {
+public interface IMemberAccountService {
 
     public String register(MemberAccount memberAccount);
 }
