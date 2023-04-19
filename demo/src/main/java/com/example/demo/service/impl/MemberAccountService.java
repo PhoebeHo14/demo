@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import com.example.demo.dao.MemberAccountRepository;
 import com.example.demo.entity.MemberAccount;
+import com.example.demo.mapper.MemberAccountMapper;
 import com.example.demo.service.IMemberAccountService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,10 @@ public class MemberAccountService implements IMemberAccountService {
 
     @Autowired
     private MemberAccountRepository memberAccountRepository;
+    private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public String register(MemberAccount memberAccount) {
+    public void register(MemberAccount memberAccount) {
 
         MemberAccount newMember = new MemberAccount();
         String encodedPassword = BCrypt.hashpw(memberAccount.getPassword(), BCrypt.gensalt());
@@ -22,7 +24,25 @@ public class MemberAccountService implements IMemberAccountService {
         newMember.setPassword(encodedPassword);
 
         memberAccountRepository.save(newMember);
-        return null;
+    }
+
+    @Override
+    public Integer login(MemberAccount memberAccount) {
+
+        MemberAccount m = memberAccountMapper.findMemberAccountByUsername(memberAccount.getUsername());
+
+        //check if account exist
+        if(m == null){
+            return null;
+        }
+
+        //check if password is correct
+        if(BCrypt.checkpw(memberAccount.getPassword(), m.getPassword())){
+            return memberAccount.getId();
+        }else {
+            return null;
+        }
+
     }
 
 }

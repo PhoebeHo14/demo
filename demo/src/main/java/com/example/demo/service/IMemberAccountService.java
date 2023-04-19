@@ -4,5 +4,6 @@ import com.example.demo.entity.MemberAccount;
 
 public interface IMemberAccountService {
 
-    public String register(MemberAccount memberAccount);
+    public void register(MemberAccount memberAccount);
+    public Integer login(MemberAccount memberAccount);
 }
