@@ -32,14 +32,14 @@ public class MemberAccountService implements IMemberAccountService {
         MemberAccount m = memberAccountMapper.findMemberAccountByUsername(memberAccount.getUsername());
 
         //check if account exist
-        if(m == null){
+        if (m == null) {
             return null;
         }
 
         //check if password is correct
-        if(BCrypt.checkpw(memberAccount.getPassword(), m.getPassword())){
+        if (BCrypt.checkpw(memberAccount.getPassword(), m.getPassword())) {
             return memberAccount.getId();
-        }else {
+        } else {
             return null;
         }
 

@@ -4,6 +4,7 @@ import com.example.demo.entity.MemberAccount;
 import com.example.demo.service.IMemberAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,16 +15,15 @@ public class MemberAccountController {
     private IMemberAccountService accountService;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public Integer register(MemberAccount newMemberAccount){
+    public Integer register(@ModelAttribute MemberAccount newMemberAccount){
 
-        String registerResult = accountService.register(newMemberAccount);
+        accountService.register(newMemberAccount);
         return newMemberAccount.getId();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public  String login(MemberAccount memberAccount){
+    public Integer login(@ModelAttribute MemberAccount memberAccount){
 
-
-        return "Login Success";
+        return accountService.login(memberAccount);
     }
 }
