@@ -16,7 +16,7 @@ public class MemberAccountService implements IMemberAccountService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public void register(MemberAccount memberAccount) {
+    public Integer register(MemberAccount memberAccount) {
 
         MemberAccount newMember = new MemberAccount();
         String encodedPassword = BCrypt.hashpw(memberAccount.getPassword(), BCrypt.gensalt());
@@ -24,6 +24,7 @@ public class MemberAccountService implements IMemberAccountService {
         newMember.setPassword(encodedPassword);
 
         memberAccountRepository.save(newMember);
+        return newMember.getId();
     }
 
     @Override

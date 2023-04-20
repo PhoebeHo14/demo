@@ -2,33 +2,32 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.MemberAccount;
 import com.example.demo.service.IMemberAccountService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-@Api
+@RestController
+@RequestMapping("/accounts")
 public class MemberAccountController {
 
     @Autowired
     private IMemberAccountService accountService;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ApiOperation("register")
-    public Integer register(@ModelAttribute MemberAccount newMemberAccount){
-
-        accountService.register(newMemberAccount);
-        return newMemberAccount.getId();
+    @PostMapping
+    public ResponseEntity<Integer> register(@RequestBody MemberAccount newMemberAccount){
+        Integer id = accountService.register(newMemberAccount);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ApiOperation("login")
-    public Integer login(@ModelAttribute MemberAccount memberAccount){
-
-        return accountService.login(memberAccount);
+    @PostMapping("/login")
+    public ResponseEntity<Integer> login(@RequestBody MemberAccount memberAccount){
+        Integer id = accountService.login(memberAccount);
+        if(id != null){
+            return new ResponseEntity<>(id, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 }
