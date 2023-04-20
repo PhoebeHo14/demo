@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberAccountRepository extends JpaRepository {
+public interface MemberAccountRepository extends JpaRepository<MemberAccount, Long> {
 
-    public String register(MemberAccount memberAccount);
+    public MemberAccount save(MemberAccount memberAccount);
 }
