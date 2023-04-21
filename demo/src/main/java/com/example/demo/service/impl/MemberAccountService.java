@@ -4,15 +4,20 @@ import com.example.demo.dao.MemberAccountRepository;
 import com.example.demo.entity.MemberAccount;
 import com.example.demo.mapper.MemberAccountMapper;
 import com.example.demo.service.IMemberAccountService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class MemberAccountService implements IMemberAccountService {
 
     @Autowired
     private MemberAccountRepository memberAccountRepository;
+    @Autowired
     private MemberAccountMapper memberAccountMapper;
 
     @Override
@@ -23,23 +28,35 @@ public class MemberAccountService implements IMemberAccountService {
         newMember.setUsername(memberAccount.getUsername());
         newMember.setPassword(encodedPassword);
 
+        System.out.println("Username :" + memberAccount.getUsername() + "Password :" + encodedPassword);
         memberAccountRepository.save(newMember);
         return newMember.getId();
     }
 
     @Override
-    public Integer login(MemberAccount memberAccount) {
+    public String login(MemberAccount memberAccount) {
 
-        MemberAccount m = memberAccountMapper.findMemberAccountByUsername(memberAccount.getUsername());
+        String result = "000";
+
+        MemberAccount memberAccountDo = memberAccountMapper.findByUsername(memberAccount.getUsername());
 
         //check if account exist
-        if (m == null) {
+        if (memberAccountDo == null) {
             return null;
         }
 
         //check if password is correct
-        if (BCrypt.checkpw(memberAccount.getPassword(), m.getPassword())) {
-            return memberAccount.getId();
+        if (BCrypt.checkpw(memberAccount.getPassword(), memberAccountDo.getPassword())) {
+            Date expireDate =
+                    //set expireTime as 30 mins
+                    new Date(System.currentTimeMillis() + 30 * 60 * 1000);
+            String jwtToken = Jwts.builder()
+                    .setSubject(String.valueOf(memberAccountDo.getId()))
+                    .setExpiration(expireDate)
+                    .signWith(SignatureAlgorithm.HS512, "MySecret")
+                    .compact();
+            result = jwtToken;
+            return result;
         } else {
             return null;
         }
