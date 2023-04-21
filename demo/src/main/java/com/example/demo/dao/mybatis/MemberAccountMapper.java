@@ -1,6 +1,7 @@
 package com.example.demo.dao.mybatis;
 
-import com.example.demo.entity.MemberAccount;
+import com.example.demo.model.MemberAccount;
+import com.example.demo.model.MemberAccountDo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -13,7 +14,7 @@ public interface MemberAccountMapper {
     int insert(MemberAccount memberAccount);
 
     @Select("SELECT id, username, password FROM db1.account WHERE username = #{username}")
-    MemberAccount findByUsername(String username);
+    MemberAccountDo findByUsername(String username);
 
     @Update("UPDATE db1.account SET password = #{password} WHERE id = #{id}")
     int update(MemberAccount memberAccount);

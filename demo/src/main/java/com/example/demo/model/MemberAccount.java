@@ -1,6 +1,4 @@
-package com.example.demo.entity;
-
-import org.hibernate.annotations.Table;
+package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

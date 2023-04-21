@@ -1,6 +1,6 @@
 package com.example.demo.controller.service;
 
-import com.example.demo.entity.MemberAccount;
+import com.example.demo.model.MemberAccount;
 
 public interface IMemberAccountService {
 

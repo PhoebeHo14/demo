@@ -2,8 +2,9 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.IMemberAccountService;
 import com.example.demo.dao.repository.MemberAccountRepository;
-import com.example.demo.entity.MemberAccount;
+import com.example.demo.model.MemberAccount;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
+import com.example.demo.model.MemberAccountDo;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;
@@ -38,7 +39,7 @@ public class MemberAccountService implements IMemberAccountService {
 
         String result = "000";
 
-        MemberAccount memberAccountDo = memberAccountMapper.findByUsername(memberAccount.getUsername());
+        MemberAccountDo memberAccountDo = memberAccountMapper.findByUsername(memberAccount.getUsername());
 
         //check if account exist
         if (memberAccountDo == null) {
@@ -47,6 +48,7 @@ public class MemberAccountService implements IMemberAccountService {
 
         //check if password is correct
         if (BCrypt.checkpw(memberAccount.getPassword(), memberAccountDo.getPassword())) {
+
             Date expireDate =
                     //set expireTime as 30 mins
                     new Date(System.currentTimeMillis() + 30 * 60 * 1000);
