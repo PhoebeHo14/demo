@@ -15,19 +15,18 @@ public class MemberAccountController {
     @Autowired
     private IMemberAccountService accountService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Integer> register(@RequestBody MemberAccount newMemberAccount){
         Integer id = accountService.register(newMemberAccount);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Integer> login(@RequestBody MemberAccount memberAccount){
-        Integer id = accountService.login(memberAccount);
-        if(id != null){
-            return new ResponseEntity<>(id, HttpStatus.OK);
+    public String login(@RequestBody MemberAccount memberAccount){
+        if(accountService.login(memberAccount) != null){
+            return accountService.login(memberAccount);
         }else{
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return "login failed";
         }
     }
 }

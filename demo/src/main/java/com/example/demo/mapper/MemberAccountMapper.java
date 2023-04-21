@@ -9,28 +9,13 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface MemberAccountMapper {
 
-    @Insert(" INSERT INTO test_project.member_account ( "
-            + "	   username, password "
-            + " ) "
-            + " VALUE ( "
-            + "	   #{username}, #{password}"
-            + " ) ")
-    public Integer insert(MemberAccount memberAccount);
+    @Insert("INSERT INTO db1.account (username, password) VALUES (#{username}, #{password})")
+    int insert(MemberAccount memberAccount);
 
-    @Select(" SELECT "
-            + "	   ID, USERNAME, PASSWORD "
-            + " FROM "
-            + "	  Account "
-            + " WHERE "
-            + "	   USERNAME = #{username} ")
-    public MemberAccount findMemberAccountByUsername(String username);
+    @Select("SELECT id, username, password FROM db1.account WHERE username = #{username}")
+    MemberAccount findByUsername(String username);
 
-    @Update(" UPDATE "
-            + "	   Account "
-            + " SET "
-            + "	   PASSWORD = #{password} "
-            + " WHERE "
-            + "	   ID = #{id} ")
-    public Integer update(MemberAccount memberAccount);
-
+    @Update("UPDATE db1.account SET password = #{password} WHERE id = #{id}")
+    int update(MemberAccount memberAccount);
 }
+
