@@ -1,9 +1,9 @@
-package com.example.demo.service.impl;
+package com.example.demo.controller.service.impl;
 
-import com.example.demo.dao.MemberAccountRepository;
+import com.example.demo.controller.service.IMemberAccountService;
+import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.entity.MemberAccount;
-import com.example.demo.mapper.MemberAccountMapper;
-import com.example.demo.service.IMemberAccountService;
+import com.example.demo.dao.mybatis.MemberAccountMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;

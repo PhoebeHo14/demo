@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @SpringBootApplication
-@MapperScan("com.example.demo.mapper")
+@MapperScan("com.example.demo.dao.mybatis")
 public class DemoApplication {
 
 	public static void main(String[] args) {

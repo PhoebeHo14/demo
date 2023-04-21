@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.controller.service;
 
 import com.example.demo.entity.MemberAccount;
 

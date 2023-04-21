@@ -1,4 +1,4 @@
-package com.example.demo.mapper;
+package com.example.demo.dao.mybatis;
 
 import com.example.demo.entity.MemberAccount;
 import org.apache.ibatis.annotations.Insert;
