@@ -1,9 +1,9 @@
 package com.example.demo.controller.service;
 
-import com.example.demo.model.MemberAccount;
+import com.example.demo.model.MemberAccountDto;
 
 public interface IMemberAccountService {
 
-    public Integer register(MemberAccount memberAccount);
-    public String login(MemberAccount memberAccount);
+    public Integer register(MemberAccountDto memberAccountDto);
+    public String login(MemberAccountDto memberAccountDto);
 }

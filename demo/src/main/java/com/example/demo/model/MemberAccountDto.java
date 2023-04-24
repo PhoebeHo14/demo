@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "account")
-public class MemberAccount {
+public class MemberAccountDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.MemberAccount;
+import com.example.demo.model.MemberAccountDto;
 import com.example.demo.controller.service.IMemberAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +15,18 @@ public class MemberAccountController {
     private IMemberAccountService accountService;
 
     @PostMapping("/register")
-    public ResponseEntity<Integer> register(@RequestBody MemberAccount newMemberAccount){
-        Integer id = accountService.register(newMemberAccount);
+    public ResponseEntity<Integer> register(@RequestBody MemberAccountDto newMemberAccountDto){
+        Integer id = accountService.register(newMemberAccountDto);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberAccount memberAccount){
-        if(accountService.login(memberAccount) != null){
-            return accountService.login(memberAccount);
-        }else{
-            return "login failed";
+    public ResponseEntity<String> login(@RequestBody MemberAccountDto memberAccountDto){
+        String jwtToken = accountService.login(memberAccountDto);
+        if (jwtToken != null) {
+            return ResponseEntity.ok(jwtToken);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
     }
 }

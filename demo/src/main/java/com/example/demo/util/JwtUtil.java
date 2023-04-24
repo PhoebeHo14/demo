@@ -8,7 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.demo.model.MemberAccount;
+import com.example.demo.model.MemberAccountDto;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,13 +28,13 @@ public class JwtUtil {
 
 
     // generate JWT
-    public static void addAuthentication(HttpServletResponse response, MemberAccount memberAccount) {
+    public static void addAuthentication(HttpServletResponse response, MemberAccountDto memberAccountDto) {
 
         Date expireDate =
                 //set expireTime as 30 mins
                 new Date(System.currentTimeMillis() + 30 * 60 * 1000);
         String jwtToken = Jwts.builder()
-                .setSubject(String.valueOf(memberAccount.getId()))
+                .setSubject(String.valueOf(memberAccountDto.getId()))
                 .setExpiration(expireDate)
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();
