@@ -3,13 +3,17 @@ package com.example.demo.controller.service.impl;
 import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
 import com.example.demo.model.MemberAccountDto;
+import com.example.demo.util.JwtUtils;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class loginService implements ILoginService {
@@ -18,34 +22,21 @@ public class loginService implements ILoginService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public String login(MemberAccountDto memberAccount) {
-
-        String result = "000";
-
-        MemberAccountDto memberAccountDto = memberAccountMapper.findByUsername(memberAccount.getUsername());
-
-        //check if account exist
-        if (memberAccountDto == null) {
+    public String login(MemberAccountDto memberAccountDto) {
+        MemberAccountDto account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
+        if (account == null) {
             return null;
         }
 
-        //check if password is correct
-        if (BCrypt.checkpw(memberAccount.getPassword(), memberAccountDto.getPassword())) {
-
-            Date expireDate =
-                    //set expireTime as 30 mins
-                    new Date(System.currentTimeMillis() + 30 * 60 * 1000);
-            String jwtToken = Jwts.builder()
-                    .setSubject(String.valueOf(memberAccountDto.getId()))
-                    .setExpiration(expireDate)
-                    .signWith(SignatureAlgorithm.HS512, "MySecret")
-                    .compact();
-            result = jwtToken;
-            return result;
+        String password = memberAccountDto.getPassword();
+        String hashedPassword = account.getPassword();
+        boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
+        if (isPasswordCorrect) {
+            String jwtToken = JwtUtils.generateToken(account.getId());
+            return jwtToken;
         } else {
             return null;
         }
-
     }
 
 }
