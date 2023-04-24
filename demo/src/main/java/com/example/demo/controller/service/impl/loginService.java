@@ -1,9 +1,7 @@
 package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.ILoginService;
-import com.example.demo.controller.service.IRegisterService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
-import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.model.MemberAccountDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,8 +14,6 @@ import java.util.Date;
 @Service
 public class loginService implements ILoginService {
 
-    @Autowired
-    private MemberAccountRepository memberAccountRepository;
     @Autowired
     private MemberAccountMapper memberAccountMapper;
 

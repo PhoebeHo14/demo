@@ -18,9 +18,9 @@ public class MemberAccountController {
     private ILoginService loginService;
 
     @PostMapping("/register")
-    public ResponseEntity<Integer> register(@RequestBody MemberAccountDto newMemberAccountDto){
-        Integer id = registerService.register(newMemberAccountDto);
-        return new ResponseEntity<>(id, HttpStatus.CREATED);
+    public ResponseEntity<String> register(@RequestBody MemberAccountDto newMemberAccountDto){
+        String message = registerService.register(newMemberAccountDto);
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")

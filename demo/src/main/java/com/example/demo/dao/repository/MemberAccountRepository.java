@@ -4,8 +4,12 @@ import com.example.demo.model.MemberAccountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MemberAccountRepository extends JpaRepository<MemberAccountDto, Long> {
 
-    public MemberAccountDto save(MemberAccountDto memberAccountDto);
+    MemberAccountDto save(MemberAccountDto memberAccountDto);
+
+    Optional<Object> findByUsername(String username);
 }
