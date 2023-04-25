@@ -16,6 +16,6 @@ public interface MemberAccountMapper {
     MemberAccountDto findByUsername(String username);
 
     @Update("UPDATE db1.account SET password = #{password} WHERE id = #{id}")
-    int update(MemberAccountDto memberAccountDto);
+    int updatePassword(MemberAccountDto memberAccountDto);
 }
 
