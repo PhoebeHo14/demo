@@ -23,11 +23,11 @@ public class registerService implements IRegisterService {
             return "Username already exists: " + username;
         }
 
-        MemberAccountDto newMember = new MemberAccountDto();
-        newMember.setUsername(username);
-        newMember.setPassword(encodedPassword);
+        MemberAccountDto newMemberDto = new MemberAccountDto();
+        newMemberDto.setUsername(username);
+        newMemberDto.setPassword(encodedPassword);
 
-        memberAccountRepository.save(newMember);
+        memberAccountRepository.save(newMemberDto);
         return "Register Success";
     }
 

@@ -4,16 +4,9 @@ import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.util.JwtUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class loginService implements ILoginService {

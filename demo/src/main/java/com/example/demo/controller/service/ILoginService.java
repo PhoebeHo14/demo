@@ -4,5 +4,5 @@ import com.example.demo.model.MemberAccountDto;
 
 public interface ILoginService {
 
-    public String login(MemberAccountDto memberAccountDto);
+    String login(MemberAccountDto memberAccountDto);
 }
