@@ -2,8 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.service.ILoginService;
 import com.example.demo.controller.service.IUpdatePasswordService;
-import com.example.demo.model.MemberAccountDto;
+import com.example.demo.model.MemberAccountDo;
 import com.example.demo.controller.service.IRegisterService;
+import com.example.demo.model.MemberAccountDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,11 @@ public class MemberAccountController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody MemberAccountDto newMemberAccountDto){
         String message = registerService.register(newMemberAccountDto);
-        return new ResponseEntity<>(message, HttpStatus.CREATED);
+        if (message.contains("Register Success")) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        }
     }
 
     @PostMapping("/login")
@@ -37,8 +42,8 @@ public class MemberAccountController {
     }
 
     @PostMapping("/update-password")
-    public ResponseEntity<String> updatePassword(@RequestBody MemberAccountDto memberAccountDto){
-        int rowsUpdated = updatePasswordService.updatePassword(memberAccountDto);
+    public ResponseEntity<String> updatePassword(@RequestBody MemberAccountDo memberAccountDo){
+        int rowsUpdated = updatePasswordService.updatePassword(memberAccountDo);
         if (rowsUpdated > 0) {
             return ResponseEntity.ok("Password updated successfully");
         } else {
