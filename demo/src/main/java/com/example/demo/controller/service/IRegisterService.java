@@ -4,5 +4,5 @@ import com.example.demo.model.MemberAccountDto;
 
 public interface IRegisterService {
 
-    String register(MemberAccountDto memberAccountDto);
+    String register(MemberAccountDto memberAccountDo);
 }

@@ -2,7 +2,7 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.IUpdatePasswordService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
-import com.example.demo.model.MemberAccountDto;
+import com.example.demo.model.MemberAccountDo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ public class updatePasswordService implements IUpdatePasswordService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public int updatePassword(MemberAccountDto memberAccountDto) {
+    public int updatePassword(MemberAccountDo memberAccountDo) {
 
-        Integer id = memberAccountDto.getId();
-        String encodedPassword = BCrypt.hashpw(memberAccountDto.getPassword(), BCrypt.gensalt());
+        Integer id = memberAccountDo.getId();
+        String encodedPassword = BCrypt.hashpw(memberAccountDo.getPassword(), BCrypt.gensalt());
 
-        MemberAccountDto updateMemberDto = new MemberAccountDto();
+        MemberAccountDo updateMemberDto = new MemberAccountDo();
         updateMemberDto.setId(id);
         updateMemberDto.setPassword(encodedPassword);
 

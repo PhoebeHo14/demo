@@ -2,6 +2,7 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
+import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.util.JwtUtils;
 import org.mindrot.jbcrypt.BCrypt;
@@ -15,13 +16,13 @@ public class loginService implements ILoginService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public String login(MemberAccountDto memberAccountDto) {
-        MemberAccountDto account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
+    public String login(MemberAccountDto memberAccountDo) {
+        MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDo.getUsername());
         if (account == null) {
             return null;
         }
 
-        String password = memberAccountDto.getPassword();
+        String password = memberAccountDo.getPassword();
         String hashedPassword = account.getPassword();
         boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
         if (isPasswordCorrect) {

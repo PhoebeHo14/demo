@@ -1,8 +1,8 @@
 package com.example.demo.controller.service;
 
-import com.example.demo.model.MemberAccountDto;
+import com.example.demo.model.MemberAccountDo;
 
 public interface IUpdatePasswordService {
 
-    int updatePassword(MemberAccountDto memberAccountDto);
+    int updatePassword(MemberAccountDo memberAccountDo);
 }

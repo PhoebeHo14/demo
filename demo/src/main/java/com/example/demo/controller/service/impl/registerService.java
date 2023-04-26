@@ -2,6 +2,7 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.IRegisterService;
 import com.example.demo.dao.repository.MemberAccountRepository;
+import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,16 @@ public class registerService implements IRegisterService {
     private MemberAccountRepository memberAccountRepository;
 
     @Override
-    public String register(MemberAccountDto memberAccountDto) {
+    public String register(MemberAccountDto memberAccountDo) {
 
-        String username = memberAccountDto.getUsername();
-        String encodedPassword = BCrypt.hashpw(memberAccountDto.getPassword(), BCrypt.gensalt());
+        String username = memberAccountDo.getUsername();
+        String encodedPassword = BCrypt.hashpw(memberAccountDo.getPassword(), BCrypt.gensalt());
 
         if (memberAccountRepository.findByUsername(username).isPresent()) {
             return "Username already exists: " + username;
         }
 
-        MemberAccountDto newMemberDto = new MemberAccountDto();
+        MemberAccountDo newMemberDto = new MemberAccountDo();
         newMemberDto.setUsername(username);
         newMemberDto.setPassword(encodedPassword);
 
