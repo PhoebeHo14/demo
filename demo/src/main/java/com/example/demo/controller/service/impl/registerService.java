@@ -15,20 +15,20 @@ public class registerService implements IRegisterService {
     private MemberAccountRepository memberAccountRepository;
 
     @Override
-    public String register(MemberAccountDto memberAccountDo) {
+    public String register(MemberAccountDto memberAccountDto) {
 
-        String username = memberAccountDo.getUsername();
-        String encodedPassword = BCrypt.hashpw(memberAccountDo.getPassword(), BCrypt.gensalt());
+        String username = memberAccountDto.getUsername();
+        String encodedPassword = BCrypt.hashpw(memberAccountDto.getPassword(), BCrypt.gensalt());
 
         if (memberAccountRepository.findByUsername(username).isPresent()) {
             return "Username already exists: " + username;
         }
 
-        MemberAccountDo newMemberDto = new MemberAccountDo();
-        newMemberDto.setUsername(username);
-        newMemberDto.setPassword(encodedPassword);
+        MemberAccountDo newMemberDo = new MemberAccountDo();
+        newMemberDo.setUsername(username);
+        newMemberDo.setPassword(encodedPassword);
 
-        memberAccountRepository.save(newMemberDto);
+        memberAccountRepository.save(newMemberDo);
         return "Register Success";
     }
 
