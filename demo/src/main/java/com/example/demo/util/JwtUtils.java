@@ -1,11 +1,10 @@
 package com.example.demo.util;
 
 import com.example.demo.constant.SecurityConstants;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
@@ -29,6 +28,29 @@ public class JwtUtils {
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .compact();
         return token;
+    }
+
+    public static boolean validateToken(String token) {
+        try {
+            getTokenBody(token);
+            return true;
+        } catch (ExpiredJwtException e) {
+            logger.warn("Request to parse expired JWT : {} failed : {}", token, e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            logger.warn("Request to parse unsupported JWT : {} failed : {}", token, e.getMessage());
+        } catch (MalformedJwtException e) {
+            logger.warn("Request to parse invalid JWT : {} failed : {}", token, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            logger.warn("Request to parse empty or null JWT : {} failed : {}", token, e.getMessage());
+        }
+        return false;
+    }
+
+    private static Claims getTokenBody(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody();
     }
 
 }

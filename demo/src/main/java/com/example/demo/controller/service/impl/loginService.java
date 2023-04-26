@@ -16,13 +16,13 @@ public class loginService implements ILoginService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public String login(MemberAccountDto memberAccountDo) {
-        MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDo.getUsername());
+    public String login(MemberAccountDto memberAccountDto) {
+        MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
         if (account == null) {
             return null;
         }
 
-        String password = memberAccountDo.getPassword();
+        String password = memberAccountDto.getPassword();
         String hashedPassword = account.getPassword();
         boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
         if (isPasswordCorrect) {
