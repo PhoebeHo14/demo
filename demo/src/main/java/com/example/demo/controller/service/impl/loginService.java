@@ -2,35 +2,47 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
+import com.example.demo.exception.MemberAccountNotFoundException;
+import com.example.demo.exception.PasswordNotMatchException;
 import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
+import com.example.demo.model.ResponseDto;
 import com.example.demo.util.JwtUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
-public class loginService implements ILoginService {
+public class LoginService implements ILoginService {
 
     @Autowired
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public String login(MemberAccountDto memberAccountDto) {
+    public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
+
         MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
         if (account == null) {
-            return null;
+           throw new MemberAccountNotFoundException("Member Account Not Found");
         }
-
-        String password = memberAccountDto.getPassword();
-        String hashedPassword = account.getPassword();
-        boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
-        if (isPasswordCorrect) {
-            String jwtToken = JwtUtils.generateToken(account.getId());
-            return jwtToken;
-        } else {
-            return null;
-        }
+        return verifyPassword(memberAccountDto, account);
     }
 
+    private ResponseDto<String> verifyPassword(MemberAccountDto memberAccountDto, MemberAccountDo accountDo) {
+        ResponseDto<String> responseDto = new ResponseDto<>();
+        responseDto.setStatus(-1);
+
+        String password = memberAccountDto.getPassword();
+        String hashedPassword = accountDo.getPassword();
+        boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
+        if (isPasswordCorrect) {
+            String jwtToken = JwtUtils.generateToken(accountDo.getId());
+            responseDto.setStatus(1);
+            responseDto.setData(jwtToken);
+            return responseDto;
+        } else {
+            throw new PasswordNotMatchException("Password Not Match");
+        }
+    }
 }
