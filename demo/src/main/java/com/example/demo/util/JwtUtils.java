@@ -14,8 +14,6 @@ public class JwtUtils {
 
     private static final byte[] secretKey = DatatypeConverter.parseBase64Binary(SecurityConstants.JWT_SECRET_KEY);
 
-
-    // generate JWT
     public static String generateToken(Integer id) {
         byte[] jwtSecretKey = DatatypeConverter.parseBase64Binary(SecurityConstants.JWT_SECRET_KEY);
 

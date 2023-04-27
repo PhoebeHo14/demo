@@ -10,7 +10,6 @@ import com.example.demo.model.ResponseDto;
 import com.example.demo.util.JwtUtils;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +23,7 @@ public class LoginService implements ILoginService {
 
         MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
         if (account == null) {
-           throw new MemberAccountNotFoundException("Member Account Not Found");
+           throw new MemberAccountNotFoundException("Member account not found");
         }
         return verifyPassword(memberAccountDto, account);
     }
@@ -42,7 +41,7 @@ public class LoginService implements ILoginService {
             responseDto.setData(jwtToken);
             return responseDto;
         } else {
-            throw new PasswordNotMatchException("Password Not Match");
+            throw new PasswordNotMatchException("Wrong password");
         }
     }
 }
