@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class updatePasswordService implements IUpdatePasswordService {
+public class UpdatePasswordService implements IUpdatePasswordService {
 
     @Autowired
     private MemberAccountMapper memberAccountMapper;
