@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface MemberAccountRepository extends JpaRepository<MemberAccountDo, Long> {
+public interface MemberAccountRepository extends JpaRepository<MemberAccountDo, Integer> {
 
     MemberAccountDo save(MemberAccountDo memberAccountDo);
 
-    Optional<Object> findByUsername(String username);
+    MemberAccountDo findByUsername(String username);
 }
