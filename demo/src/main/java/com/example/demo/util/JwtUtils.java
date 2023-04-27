@@ -24,7 +24,7 @@ public class JwtUtils {
         String token = Jwts.builder()
                 .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
                 .signWith(SignatureAlgorithm.HS256, Keys.hmacShaKeyFor(jwtSecretKey))
-                .setSubject(String.valueOf(id))
+                .claim("id", id)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .compact();
         return token;
