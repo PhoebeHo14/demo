@@ -2,13 +2,12 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.IRegisterService;
 import com.example.demo.dao.repository.MemberAccountRepository;
-import com.example.demo.exception.UsernameDuplicateException;
+import com.example.demo.exception.ServiceException;
 import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +20,7 @@ public class RegisterService implements IRegisterService {
     public ResponseDto start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {
-            throw new UsernameDuplicateException("Username already exists");
+            throw new ServiceException("Username already exists");
         }
 
         return saveAccount(memberAccountDto);
@@ -42,6 +41,7 @@ public class RegisterService implements IRegisterService {
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
+        responseDto.setMessage("Register success");
 
         return responseDto;
     }
