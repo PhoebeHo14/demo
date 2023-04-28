@@ -17,30 +17,29 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Autowired
-    private JwtAuthorizationFilter jwtAuthorizationFilter;
-
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/accounts/register", "/accounts/login", "/i18n/**", "/api-docs.yaml"
     };
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+
+
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers("/v3/api-docs/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/accounts/register").permitAll()
+                .antMatchers("/accounts/login").permitAll()
+                .antMatchers("/i18n/**").permitAll()
+                .antMatchers("/api-docs.yaml").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthorizationFilter( super.authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
 
     }
 

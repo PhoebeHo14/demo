@@ -4,7 +4,6 @@ import com.example.demo.constant.SecurityConstants;
 import com.example.demo.util.JwtUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
-@Component
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
@@ -27,7 +25,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (JwtUtils.validateToken(token)) {
             response.setStatus(HttpServletResponse.SC_OK);
-//            filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
         }else {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
