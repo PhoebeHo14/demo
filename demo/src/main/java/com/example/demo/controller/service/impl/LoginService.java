@@ -2,8 +2,7 @@ package com.example.demo.controller.service.impl;
 
 import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
-import com.example.demo.exception.MemberAccountNotFoundException;
-import com.example.demo.exception.PasswordNotMatchException;
+import com.example.demo.exception.ServiceException;
 import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
@@ -23,25 +22,22 @@ public class LoginService implements ILoginService {
 
         MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
         if (account == null) {
-           throw new MemberAccountNotFoundException("Member account not found");
+            throw new ServiceException("Member account not found");
         }
-        return verifyPassword(memberAccountDto, account);
-    }
 
-    private ResponseDto<String> verifyPassword(MemberAccountDto memberAccountDto, MemberAccountDo accountDo) {
-        ResponseDto<String> responseDto = new ResponseDto<>();
-        responseDto.setStatus(-1);
-
-        String password = memberAccountDto.getPassword();
-        String hashedPassword = accountDo.getPassword();
-        boolean isPasswordCorrect = BCrypt.checkpw(password, hashedPassword);
-        if (isPasswordCorrect) {
-            String jwtToken = JwtUtils.generateToken(accountDo.getId());
+        if (verifyPassword(memberAccountDto.getPassword(), account.getPassword())) {
+            ResponseDto<String> responseDto = new ResponseDto<>();
             responseDto.setStatus(1);
-            responseDto.setData(jwtToken);
+            responseDto.setMessage("Login success");
+            responseDto.setData(JwtUtils.generateToken(account.getId()));
             return responseDto;
         } else {
-            throw new PasswordNotMatchException("Wrong password");
+            throw new ServiceException("Wrong password");
         }
     }
+
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return BCrypt.checkpw(password, hashedPassword);
+    }
+
 }
