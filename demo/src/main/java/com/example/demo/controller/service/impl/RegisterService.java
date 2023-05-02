@@ -17,7 +17,7 @@ public class RegisterService implements IRegisterService {
     private MemberAccountRepository memberAccountRepository;
 
     @Override
-    public ResponseDto start(MemberAccountDto memberAccountDto) {
+    public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {
             throw new ServiceException("Username already exists");

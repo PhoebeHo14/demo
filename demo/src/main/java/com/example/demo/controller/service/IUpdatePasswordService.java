@@ -1,8 +1,9 @@
 package com.example.demo.controller.service;
 
 import com.example.demo.model.MemberAccountDo;
+import com.example.demo.model.ResponseDto;
 
 public interface IUpdatePasswordService {
 
-    int updatePassword(MemberAccountDo memberAccountDo);
+    ResponseDto<String> start(MemberAccountDo memberAccountDo);
 }

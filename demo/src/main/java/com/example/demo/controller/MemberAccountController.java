@@ -8,8 +8,6 @@ import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,12 +33,7 @@ public class MemberAccountController {
 
     @PostMapping("/update-password")
     @SecurityRequirement(name = "token")
-    public ResponseEntity<String> updatePassword(@RequestBody MemberAccountDo memberAccountDo){
-        int rowsUpdated = updatePasswordService.updatePassword(memberAccountDo);
-        if (rowsUpdated > 0) {
-            return ResponseEntity.ok("Password updated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to update password");
-        }
+    public ResponseDto<String> updatePassword(@RequestBody MemberAccountDo memberAccountDo){
+        return updatePasswordService.start(memberAccountDo);
     }
 }

@@ -5,5 +5,5 @@ import com.example.demo.model.ResponseDto;
 
 public interface IRegisterService {
 
-    ResponseDto start(MemberAccountDto memberAccountDo);
+    ResponseDto<String> start(MemberAccountDto memberAccountDo);
 }
