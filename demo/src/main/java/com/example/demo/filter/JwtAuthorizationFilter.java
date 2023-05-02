@@ -7,6 +7,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,7 +33,8 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             try {
                 String token = authHeader.replace("Bearer ", "");
                 Claims claim = jwtUtils.getTokenBody(token);
-                System.out.println("pass");
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId"), null, null);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |
                      IllegalArgumentException e) {
                 System.out.println(e);
@@ -39,4 +43,5 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
+
 }
