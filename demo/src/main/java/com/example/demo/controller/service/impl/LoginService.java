@@ -7,8 +7,8 @@ import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import com.example.demo.util.JwtUtils;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service

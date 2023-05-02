@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberAccountRepository extends JpaRepository<MemberAccountDo, Integer> {
 
-    MemberAccountDo save(MemberAccountDo memberAccountDo);
-
     MemberAccountDo findByUsername(String username);
 }
