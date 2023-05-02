@@ -5,6 +5,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
@@ -24,7 +26,7 @@ public class JwtUtils {
         String token = Jwts.builder()
                 .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
                 .signWith(SignatureAlgorithm.HS256, Keys.hmacShaKeyFor(jwtSecretKey))
-                .claim("id", id)
+                .claim("userId", id)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .compact();
         return token;

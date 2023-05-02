@@ -5,6 +5,7 @@ import com.example.demo.dao.mybatis.MemberAccountMapper;
 import com.example.demo.model.MemberAccountDo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,7 @@ public class UpdatePasswordService implements IUpdatePasswordService {
     @Override
     public int updatePassword(MemberAccountDo memberAccountDo) {
 
-        Integer id = memberAccountDo.getId();
+        Integer id = (Integer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String encodedPassword = BCrypt.hashpw(memberAccountDo.getPassword(), BCrypt.gensalt());
 
         MemberAccountDo updateMemberDto = new MemberAccountDo();
