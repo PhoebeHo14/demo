@@ -5,10 +5,12 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
+@Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
@@ -44,7 +46,7 @@ public class JwtUtils {
         return false;
     }
 
-    private static Claims getTokenBody(String token) {
+    public static Claims getTokenBody(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)

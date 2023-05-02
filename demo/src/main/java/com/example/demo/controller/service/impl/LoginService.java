@@ -29,7 +29,7 @@ public class LoginService implements ILoginService {
             ResponseDto<String> responseDto = new ResponseDto<>();
             responseDto.setStatus(1);
             responseDto.setMessage("Login success");
-            responseDto.setData(JwtUtils.generateToken(account.getId()));
+            responseDto.setToken(JwtUtils.generateToken(account.getId()));
             return responseDto;
         } else {
             throw new ServiceException("Wrong password");
