@@ -15,6 +15,9 @@ public class JwtUtils {
 
     private static final byte[] secretKey = DatatypeConverter.parseBase64Binary(SecurityConstants.JWT_SECRET_KEY);
 
+    private JwtUtils() {
+    }
+
     public static String generateToken(Integer id) {
         byte[] jwtSecretKey = DatatypeConverter.parseBase64Binary(SecurityConstants.JWT_SECRET_KEY);
 
@@ -22,15 +25,16 @@ public class JwtUtils {
 
         return Jwts.builder()
                 .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
-                .signWith(SignatureAlgorithm.HS256, Keys.hmacShaKeyFor(jwtSecretKey))
+                .signWith(Keys.hmacShaKeyFor(jwtSecretKey), SignatureAlgorithm.HS256)
                 .claim("userId", id)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .compact();
     }
 
     public static Claims getTokenBody(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
