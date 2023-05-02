@@ -17,10 +17,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    private static final String[] AUTH_WHITELIST = {
-            "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**", "/accounts/register", "/accounts/login", "/i18n/**", "/api-docs.yaml"
-    };
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
 

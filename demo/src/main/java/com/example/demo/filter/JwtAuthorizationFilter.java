@@ -5,10 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -22,22 +20,17 @@ import java.io.IOException;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-        System.out.println(authHeader);
         if (authHeader != null) {
             try {
                 String token = authHeader.replace("Bearer ", "");
-                Claims claim = jwtUtils.getTokenBody(token);
+                Claims claim = JwtUtils.getTokenBody(token);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId"), null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |
                      IllegalArgumentException e) {
-                System.out.println(e);
                 throw new AuthenticationServiceException("invalid authentication");
             }
         }
