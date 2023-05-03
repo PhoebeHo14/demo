@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.service.ILoginService;
-import com.example.demo.controller.service.IRegisterService;
-import com.example.demo.controller.service.IUpdatePasswordService;
+import com.example.demo.controller.service.impl.LoginService;
+import com.example.demo.controller.service.impl.RegisterService;
+import com.example.demo.controller.service.impl.UpdatePasswordService;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -19,11 +19,11 @@ import java.security.Principal;
 public class MemberAccountController {
 
     @Autowired
-    private IRegisterService registerService;
+    private RegisterService registerService;
     @Autowired
-    private ILoginService loginService;
+    private LoginService loginService;
     @Autowired
-    private IUpdatePasswordService updatePasswordService;
+    private UpdatePasswordService updatePasswordService;
 
     @PostMapping("/register")
     public ResponseDto<String> register(@RequestBody MemberAccountDto newMemberAccountDto){

@@ -1,6 +1,5 @@
 package com.example.demo.controller.service.impl;
 
-import com.example.demo.controller.service.IRegisterService;
 import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.model.MemberAccountDo;
@@ -11,12 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegisterService implements IRegisterService {
+public class RegisterService {
 
     @Autowired
     private MemberAccountRepository memberAccountRepository;
 
-    @Override
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {

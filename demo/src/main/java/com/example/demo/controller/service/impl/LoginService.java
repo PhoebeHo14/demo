@@ -1,6 +1,5 @@
 package com.example.demo.controller.service.impl;
 
-import com.example.demo.controller.service.ILoginService;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.model.MemberAccountDo;
@@ -13,14 +12,13 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService implements ILoginService {
+public class LoginService {
 
     @Autowired
     private MemberAccountMapper memberAccountMapper;
     @Value("${jwt.secret}")
     private String secret;
 
-    @Override
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
