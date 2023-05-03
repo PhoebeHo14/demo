@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,13 +21,16 @@ import java.io.IOException;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
+    @Value("${jwt.secret}")
+    private String secret;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
         if (authHeader != null) {
             try {
                 String token = authHeader.replace("Bearer ", "");
-                Claims claim = JwtUtils.getTokenBody(token);
+                Claims claim = JwtUtils.getTokenBody(token, secret);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId"), null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |

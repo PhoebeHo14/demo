@@ -13,29 +13,26 @@ import java.util.Date;
 
 public class JwtUtils {
 
-    @Value("${security.jwt.secret-key}")
-    private static String secretKey;
-
-    private static final byte[] parsedSecretKey = DatatypeConverter.parseBase64Binary(secretKey);
+//    private static final byte[] secretKey = DatatypeConverter.parseBase64Binary(secret);
 
     private JwtUtils() {
     }
 
-    public static String generateToken(Integer id) {
+    public static String generateToken(Integer id, String secret) {
 
         long expiration = SecurityConstants.EXPIRATION_TIME;
 
         return Jwts.builder()
                 .setHeaderParam("typ", SecurityConstants.TOKEN_TYPE)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, DatatypeConverter.parseBase64Binary(secret))
                 .claim("userId", id)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .compact();
     }
 
-    public static Claims getTokenBody(String token) {
+    public static Claims getTokenBody(String token, String secret) {
         return Jwts.parser()
-                .setSigningKey(parsedSecretKey)
+                .setSigningKey(DatatypeConverter.parseBase64Binary(secret))
                 .parseClaimsJws(token)
                 .getBody();
     }
