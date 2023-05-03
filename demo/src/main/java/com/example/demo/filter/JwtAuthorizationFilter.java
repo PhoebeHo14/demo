@@ -31,7 +31,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             try {
                 String token = authHeader.replace("Bearer ", "");
                 Claims claim = JwtUtils.getTokenBody(token, secret);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId"), null, null);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId").toString(), null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |
                      IllegalArgumentException e) {

@@ -5,14 +5,12 @@ import com.example.demo.controller.service.RegisterService;
 import com.example.demo.controller.service.UpdatePasswordService;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/accounts")
@@ -36,9 +34,8 @@ public class MemberAccountController {
     }
 
     @PostMapping("/update-password")
-    @SecurityRequirement(name = "token")
-    public ResponseDto<String> updatePassword(Principal principal, @RequestBody MemberAccountDto memberAccountDto) {
-
-        return updatePasswordService.start(principal.getName(), memberAccountDto);
+//    @SecurityRequirement(name = "token")
+    public ResponseDto<String> updatePassword(@AuthenticationPrincipal String userDetails, @RequestBody MemberAccountDto memberAccountDto) {
+        return updatePasswordService.start(userDetails, memberAccountDto);
     }
 }
