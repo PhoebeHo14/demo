@@ -1,7 +1,6 @@
 package com.example.demo.dao.mybatis;
 
 import com.example.demo.model.MemberAccountDo;
-import com.example.demo.model.ResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

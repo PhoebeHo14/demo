@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.controller.service.impl.LoginService;
-import com.example.demo.controller.service.impl.RegisterService;
-import com.example.demo.controller.service.impl.UpdatePasswordService;
+import com.example.demo.controller.service.LoginService;
+import com.example.demo.controller.service.RegisterService;
+import com.example.demo.controller.service.UpdatePasswordService;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -31,7 +31,7 @@ public class MemberAccountController {
     }
 
     @PostMapping("/login")
-    public ResponseDto<String> login(@RequestBody MemberAccountDto memberAccountDto) throws Exception {
+    public ResponseDto<String> login(@RequestBody MemberAccountDto memberAccountDto) {
         return loginService.start(memberAccountDto);
     }
 

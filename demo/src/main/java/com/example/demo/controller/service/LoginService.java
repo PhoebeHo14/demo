@@ -1,4 +1,4 @@
-package com.example.demo.controller.service.impl;
+package com.example.demo.controller.service;
 
 import com.example.demo.dao.mybatis.MemberAccountMapper;
 import com.example.demo.exception.ServiceException;
@@ -8,7 +8,7 @@ import com.example.demo.model.ResponseDto;
 import com.example.demo.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +16,8 @@ public class LoginService {
 
     @Autowired
     private MemberAccountMapper memberAccountMapper;
+    @Autowired
+    private BCryptPasswordEncoder encode;
     @Value("${jwt.secret}")
     private String secret;
 
@@ -26,20 +28,15 @@ public class LoginService {
             throw new ServiceException("Member account not found");
         }
 
-        if (verifyPassword(memberAccountDto.getPassword(), account.getPassword())) {
+        if (encode.matches(memberAccountDto.getPassword(),account.getPassword())) {
             ResponseDto<String> responseDto = new ResponseDto<>();
             responseDto.setStatus(1);
             responseDto.setMessage("Login success");
-            System.out.println("*******************secret: "+secret);
             responseDto.setToken(JwtUtils.generateToken(account.getId(), secret));
             return responseDto;
         } else {
             throw new ServiceException("Wrong password");
         }
-    }
-
-    public boolean verifyPassword(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
     }
 
 }

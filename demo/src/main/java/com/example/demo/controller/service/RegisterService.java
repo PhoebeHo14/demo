@@ -1,4 +1,4 @@
-package com.example.demo.controller.service.impl;
+package com.example.demo.controller.service;
 
 import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.exception.ServiceException;
@@ -6,7 +6,7 @@ import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +14,8 @@ public class RegisterService {
 
     @Autowired
     private MemberAccountRepository memberAccountRepository;
+    @Autowired
+    private BCryptPasswordEncoder encode;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
@@ -29,7 +31,7 @@ public class RegisterService {
     }
 
     private ResponseDto<String> saveAccount(MemberAccountDto memberAccountDto) {
-        String encodedPassword = BCrypt.hashpw(memberAccountDto.getPassword(), BCrypt.gensalt());
+        String encodedPassword = encode.encode(memberAccountDto.getPassword());
 
         MemberAccountDo newMemberDo = new MemberAccountDo();
         newMemberDo.setUsername(memberAccountDto.getUsername());

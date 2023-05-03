@@ -10,8 +10,6 @@ import java.util.Date;
 
 public class JwtUtils {
 
-//    private static final byte[] secretKey = DatatypeConverter.parseBase64Binary(secret);
-
     private JwtUtils() {
     }
 
