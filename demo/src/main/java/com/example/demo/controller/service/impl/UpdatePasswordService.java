@@ -18,10 +18,10 @@ public class UpdatePasswordService implements IUpdatePasswordService {
     private MemberAccountMapper memberAccountMapper;
 
     @Override
-    public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
+    public ResponseDto<String> start(String userId, MemberAccountDto memberAccountDto) {
 
         MemberAccountDo updateMemberDto = new MemberAccountDo();
-        updateMemberDto.setId(getCurrentUserId());
+        updateMemberDto.setId(Integer.valueOf(userId));
         updateMemberDto.setPassword(getEncodedPassword(memberAccountDto));
         int rowsUpdated = memberAccountMapper.updatePassword(updateMemberDto);
 
