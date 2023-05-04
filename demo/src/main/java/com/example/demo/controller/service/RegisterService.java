@@ -6,6 +6,8 @@ import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,14 @@ public class RegisterService {
     private MemberAccountRepository memberAccountRepository;
     @Autowired
     private BCryptPasswordEncoder encode;
+    @Autowired
+    MessageSource messageSource;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {
-            throw new ServiceException("Username already exists");
+            String message = messageSource.getMessage("error.message", null, LocaleContextHolder.getLocale());
+            throw new ServiceException(message);
         }
 
         return saveAccount(memberAccountDto);
