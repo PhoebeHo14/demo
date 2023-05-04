@@ -11,6 +11,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 public class RegisterService {
 
@@ -20,11 +22,12 @@ public class RegisterService {
     private BCryptPasswordEncoder encode;
     @Autowired
     MessageSource messageSource;
+    private Locale locale;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {
-            String message = messageSource.getMessage("error.message", null, LocaleContextHolder.getLocale());
+            String message = messageSource.getMessage("account.duplicate", null, locale);
             throw new ServiceException(message);
         }
 
@@ -46,7 +49,8 @@ public class RegisterService {
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
-        responseDto.setMessage("Register success");
+        String message = messageSource.getMessage("login.success", null, locale);
+        responseDto.setMessage(message);
 
         return responseDto;
     }

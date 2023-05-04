@@ -8,8 +8,11 @@ import com.example.demo.model.ResponseDto;
 import com.example.demo.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Locale;
 
 @Service
 public class LoginService {
@@ -20,6 +23,9 @@ public class LoginService {
     private BCryptPasswordEncoder encode;
     @Value("${jwt.secret}")
     private String secret;
+    @Autowired
+    MessageSource messageSource;
+    private Locale locale;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
@@ -31,7 +37,8 @@ public class LoginService {
         if (encode.matches(memberAccountDto.getPassword(),account.getPassword())) {
             ResponseDto<String> responseDto = new ResponseDto<>();
             responseDto.setStatus(1);
-            responseDto.setMessage("Login success");
+            String message = messageSource.getMessage("register.success", null, locale);
+            responseDto.setMessage(message);
             responseDto.setToken(JwtUtils.generateToken(account.getId(), secret));
             return responseDto;
         } else {
