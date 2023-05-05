@@ -8,9 +8,9 @@ import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 
-public class JwtUtils {
+public class JwtUtil {
 
-    private JwtUtils() {
+    private JwtUtil() {
     }
 
     public static String generateToken(Integer id, String secret) {

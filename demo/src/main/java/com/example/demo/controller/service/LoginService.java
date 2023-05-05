@@ -5,7 +5,7 @@ import com.example.demo.exception.ServiceException;
 import com.example.demo.model.MemberAccountDo;
 import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
-import com.example.demo.util.JwtUtils;
+import com.example.demo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -37,9 +37,9 @@ public class LoginService {
         if (encode.matches(memberAccountDto.getPassword(),account.getPassword())) {
             ResponseDto<String> responseDto = new ResponseDto<>();
             responseDto.setStatus(1);
-            String message = messageSource.getMessage("register.success", null, locale);
+            String message = messageSource.getMessage("login.success", null, locale);
             responseDto.setMessage(message);
-            responseDto.setToken(JwtUtils.generateToken(account.getId(), secret));
+            responseDto.setToken(JwtUtil.generateToken(account.getId(), secret));
             return responseDto;
         } else {
             throw new ServiceException("Wrong password");

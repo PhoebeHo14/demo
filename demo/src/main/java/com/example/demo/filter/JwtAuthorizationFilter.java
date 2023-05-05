@@ -1,6 +1,6 @@
 package com.example.demo.filter;
 
-import com.example.demo.util.JwtUtils;
+import com.example.demo.util.JwtUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -22,7 +22,7 @@ import java.io.IOException;
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     @Value("${jwt.secret}")
-    private String secret;
+    String secret;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (authHeader != null) {
             try {
                 String token = authHeader.replace("Bearer ", "");
-                Claims claim = JwtUtils.getTokenBody(token, secret);
+                Claims claim = JwtUtil.getTokenBody(token, secret);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claim.get("userId").toString(), null, null);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |

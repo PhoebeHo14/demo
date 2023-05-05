@@ -7,7 +7,6 @@ import com.example.demo.model.MemberAccountDto;
 import com.example.demo.model.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +48,7 @@ public class RegisterService {
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
-        String message = messageSource.getMessage("login.success", null, locale);
+        String message = messageSource.getMessage("register.success", null, locale);
         responseDto.setMessage(message);
 
         return responseDto;
