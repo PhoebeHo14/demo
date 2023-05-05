@@ -16,6 +16,6 @@ import org.springframework.context.annotation.Configuration;
         scheme = "bearer",
         in = SecuritySchemeIn.HEADER
 )
-public class SwaggerConfig {
+public class SwaggerConfiguration {
 
 }
