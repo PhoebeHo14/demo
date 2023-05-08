@@ -13,8 +13,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Locale;
-
 @Service
 public class LoginService {
 
