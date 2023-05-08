@@ -1,6 +1,6 @@
 package com.example.demo.exception;
 
-import com.example.demo.model.ResponseDto;
+import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 

@@ -2,8 +2,8 @@ package com.example.demo.schedule;
 
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
-import com.example.demo.model.CheckInDto;
-import com.example.demo.model.WorkTimeDto;
+import com.example.demo.controller.pojo.CheckInDto;
+import com.example.demo.controller.pojo.WorkTimeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

@@ -9,8 +9,6 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import java.time.LocalDate;
-
 @Configuration
 public class QuartzConfiguration {
 
@@ -34,7 +32,7 @@ public class QuartzConfiguration {
 
     @Bean
     public CronTriggerFactoryBean jobTrigger(JobDetail calculateWorkTimeJobDetail) {
-        String cron = "0/5 * * * * ? ";  //todo execute per 5 seconds
+        String cron = "* * * L * ? ";  //todo execute per 5 seconds
         CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
         trigger.setJobDetail(calculateWorkTimeJobDetail);
         trigger.setCronExpression(cron);
