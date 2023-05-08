@@ -1,15 +1,15 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.pojo.MemberAccountDto;
+import com.example.demo.controller.pojo.ResponseDto;
 import com.example.demo.controller.pojo.UpdatePasswordDto;
 import com.example.demo.controller.service.LoginService;
 import com.example.demo.controller.service.RegisterService;
 import com.example.demo.controller.service.UpdatePasswordService;
-import com.example.demo.controller.pojo.MemberAccountDto;
-import com.example.demo.controller.pojo.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,18 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/accounts")
 @Tag(name = "Member Account")
+@RequiredArgsConstructor
 public class MemberAccountController {
 
-    @Autowired
-    RegisterService registerService;
-    @Autowired
-    LoginService loginService;
-    @Autowired
-    UpdatePasswordService updatePasswordService;
+    private final RegisterService registerService;
+    private final LoginService loginService;
+    private final UpdatePasswordService updatePasswordService;
 
     @PostMapping("/register")
     @Operation(summary = "註冊")
-    public ResponseDto<String> register(@RequestBody MemberAccountDto newMemberAccountDto){
+    public ResponseDto<String> register(@RequestBody MemberAccountDto newMemberAccountDto) {
         return registerService.start(newMemberAccountDto);
     }
 

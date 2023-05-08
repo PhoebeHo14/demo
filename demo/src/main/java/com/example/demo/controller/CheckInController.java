@@ -6,18 +6,18 @@ import com.example.demo.controller.pojo.ResponseDto;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Tag(name = "Check In")
+@RequiredArgsConstructor
 public class CheckInController {
-    @Autowired
-    CheckInService checkInService;
-    @Autowired
-    CheckOutService checkOutService;
+
+    private final CheckInService checkInService;
+    private final CheckOutService checkOutService;
 
     @PostMapping("/check-in")
     @SecurityRequirement(name = "token")

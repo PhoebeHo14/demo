@@ -4,7 +4,7 @@ import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.exception.ServiceException;
 import com.example.demo.controller.pojo.CheckInDto;
 import com.example.demo.controller.pojo.ResponseDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,17 +13,17 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class CheckOutService {
-    @Autowired
-    CheckInRepository checkInRepository;
-    @Autowired
-    MessageSource messageSource;
+
+    private final CheckInRepository checkInRepository;
+    private final MessageSource messageSource;
 
     public ResponseDto<String> start(String userId) {
         Integer id = Integer.valueOf(userId);
         CheckInDto checkInDto = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());
 
-        if(checkInDto == null){
+        if (checkInDto == null) {
             String message = messageSource.getMessage("not.check.in", null, LocaleContextHolder.getLocale());
             throw new ServiceException(message);
         }

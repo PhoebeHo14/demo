@@ -6,7 +6,7 @@ import com.example.demo.dao.repository.pojo.MemberAccountDo;
 import com.example.demo.controller.pojo.MemberAccountDto;
 import com.example.demo.controller.pojo.ResponseDto;
 import com.example.demo.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -14,15 +14,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class LoginService {
 
-    @Autowired
-    MemberAccountMapper memberAccountMapper;
-    @Autowired
-    BCryptPasswordEncoder encode;
+    private final MemberAccountMapper memberAccountMapper;
+    private final BCryptPasswordEncoder encode;
     @Value("${jwt.secret}")
     String secret;
-    @Autowired
     MessageSource messageSource;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
