@@ -1,0 +1,25 @@
+CREATE DATABASE db1;
+
+USE db1;
+
+CREATE TABLE account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE check_in (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  account_id INT NOT NULL,
+  check_in_time timestamp NOT NULL,
+  check_out_time timestamp,
+  check_in_date timestamp NOT NULL
+);
+
+CREATE TABLE work_time (
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	account_id INT NOT NULL,
+    work_time BIGINT
+);
+
+
