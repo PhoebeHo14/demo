@@ -6,6 +6,7 @@ import com.example.demo.dao.repository.pojo.MemberAccountDo;
 import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,6 @@ public class UpdatePasswordService {
     BCryptPasswordEncoder encode;
     @Autowired
     MessageSource messageSource;
-    Locale locale;
 
     public ResponseDto<String> start(String userId, UpdatePasswordDto memberAccountDto) {
 
@@ -32,11 +32,11 @@ public class UpdatePasswordService {
         ResponseDto<String> responseDto = new ResponseDto<>();
         if (rowsUpdated > 0) {
             responseDto.setStatus(1);
-            String message = messageSource.getMessage("password.updated", null, locale);
+            String message = messageSource.getMessage("password.updated", null, LocaleContextHolder.getLocale());
             responseDto.setMessage(message);
         } else {
             responseDto.setStatus(-1);
-            String message = messageSource.getMessage("password.update.failed", null, locale);
+            String message = messageSource.getMessage("password.update.failed", null, LocaleContextHolder.getLocale());
             responseDto.setMessage(message);
         }
         return responseDto;

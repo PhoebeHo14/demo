@@ -6,6 +6,7 @@ import com.example.demo.controller.pojo.CheckInDto;
 import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -18,13 +19,13 @@ public class CheckOutService {
     CheckInRepository checkInRepository;
     @Autowired
     MessageSource messageSource;
-    Locale locale;
+
     public ResponseDto<String> start(String userId) {
         Integer id = Integer.valueOf(userId);
         CheckInDto checkInDto = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());
 
         if(checkInDto == null){
-            String message = messageSource.getMessage("not.check.in", null, locale);
+            String message = messageSource.getMessage("not.check.in", null, LocaleContextHolder.getLocale());
             throw new ServiceException(message);
         }
 
@@ -34,7 +35,7 @@ public class CheckOutService {
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
-        String message = messageSource.getMessage("check.out.success", null, locale);
+        String message = messageSource.getMessage("check.out.success", null, LocaleContextHolder.getLocale());
         responseDto.setMessage(message);
 
         return responseDto;

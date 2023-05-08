@@ -22,7 +22,6 @@ public class RegisterService {
     BCryptPasswordEncoder encode;
     @Autowired
     MessageSource messageSource;
-    Locale locale;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
@@ -49,7 +48,7 @@ public class RegisterService {
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);
-        String message = messageSource.getMessage("register.success", null, locale);
+        String message = messageSource.getMessage("register.success", null, LocaleContextHolder.getLocale());
         responseDto.setMessage(message);
 
         return responseDto;
