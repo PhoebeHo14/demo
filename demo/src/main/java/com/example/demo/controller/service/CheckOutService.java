@@ -2,7 +2,7 @@ package com.example.demo.controller.service;
 
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.exception.ServiceException;
-import com.example.demo.controller.pojo.CheckInDto;
+import com.example.demo.dao.repository.pojo.CheckInDo;
 import com.example.demo.controller.pojo.ResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -21,16 +21,16 @@ public class CheckOutService {
 
     public ResponseDto<String> start(String userId) {
         Integer id = Integer.valueOf(userId);
-        CheckInDto checkInDto = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());
+        CheckInDo checkInDo = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());
 
-        if (checkInDto == null) {
+        if (checkInDo == null) {
             String message = messageSource.getMessage("not.check.in", null, LocaleContextHolder.getLocale());
             throw new ServiceException(message);
         }
 
-        checkInDto.setCheckOutTime(LocalDateTime.now());
+        checkInDo.setCheckOutTime(LocalDateTime.now());
 
-        checkInRepository.save(checkInDto);
+        checkInRepository.save(checkInDo);
 
         ResponseDto<String> responseDto = new ResponseDto<>();
         responseDto.setStatus(1);

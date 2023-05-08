@@ -1,4 +1,4 @@
-package com.example.demo.controller.pojo;
+package com.example.demo.dao.repository.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity(name = "check_in")
-public class CheckInDto {
+public class CheckInDo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
