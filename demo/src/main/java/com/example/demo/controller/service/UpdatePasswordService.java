@@ -1,22 +1,28 @@
 package com.example.demo.controller.service;
 
+import com.example.demo.controller.pojo.UpdatePasswordDto;
 import com.example.demo.dao.mybatis.MemberAccountMapper;
-import com.example.demo.model.MemberAccountDo;
-import com.example.demo.model.MemberAccountDto;
-import com.example.demo.model.ResponseDto;
+import com.example.demo.dao.repository.pojo.MemberAccountDo;
+import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Locale;
 
 @Service
 public class UpdatePasswordService {
 
     @Autowired
-    private MemberAccountMapper memberAccountMapper;
+    MemberAccountMapper memberAccountMapper;
     @Autowired
-    private BCryptPasswordEncoder encode;
+    BCryptPasswordEncoder encode;
+    @Autowired
+    MessageSource messageSource;
+    Locale locale;
 
-    public ResponseDto<String> start(String userId, MemberAccountDto memberAccountDto) {
+    public ResponseDto<String> start(String userId, UpdatePasswordDto memberAccountDto) {
 
         MemberAccountDo updateMemberDto = new MemberAccountDo();
         updateMemberDto.setId(Integer.valueOf(userId));
@@ -26,10 +32,12 @@ public class UpdatePasswordService {
         ResponseDto<String> responseDto = new ResponseDto<>();
         if (rowsUpdated > 0) {
             responseDto.setStatus(1);
-            responseDto.setMessage("Password updated successfully");
+            String message = messageSource.getMessage("password.updated", null, locale);
+            responseDto.setMessage(message);
         } else {
             responseDto.setStatus(-1);
-            responseDto.setMessage("Failed to update password");
+            String message = messageSource.getMessage("password.update.failed", null, locale);
+            responseDto.setMessage(message);
         }
         return responseDto;
     }

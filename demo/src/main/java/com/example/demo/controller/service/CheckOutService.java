@@ -2,8 +2,8 @@ package com.example.demo.controller.service;
 
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.exception.ServiceException;
-import com.example.demo.model.CheckInDto;
-import com.example.demo.model.ResponseDto;
+import com.example.demo.controller.pojo.CheckInDto;
+import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class CheckOutService {
     CheckInRepository checkInRepository;
     @Autowired
     MessageSource messageSource;
-    private Locale locale;
+    Locale locale;
     public ResponseDto<String> start(String userId) {
         Integer id = Integer.valueOf(userId);
         CheckInDto checkInDto = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());

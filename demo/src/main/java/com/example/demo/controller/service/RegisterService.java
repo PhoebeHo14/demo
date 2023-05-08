@@ -2,9 +2,9 @@ package com.example.demo.controller.service;
 
 import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.exception.ServiceException;
-import com.example.demo.model.MemberAccountDo;
-import com.example.demo.model.MemberAccountDto;
-import com.example.demo.model.ResponseDto;
+import com.example.demo.dao.repository.pojo.MemberAccountDo;
+import com.example.demo.controller.pojo.MemberAccountDto;
+import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,12 +16,12 @@ import java.util.Locale;
 public class RegisterService {
 
     @Autowired
-    private MemberAccountRepository memberAccountRepository;
+    MemberAccountRepository memberAccountRepository;
     @Autowired
-    private BCryptPasswordEncoder encode;
+    BCryptPasswordEncoder encode;
     @Autowired
     MessageSource messageSource;
-    private Locale locale;
+    Locale locale;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
