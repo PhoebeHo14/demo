@@ -7,6 +7,7 @@ import com.example.demo.controller.pojo.MemberAccountDto;
 import com.example.demo.controller.pojo.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class RegisterService {
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 
         if (isAccountExist(memberAccountDto)) {
-            String message = messageSource.getMessage("account.duplicate", null, locale);
+            String message = messageSource.getMessage("account.duplicate", null, LocaleContextHolder.getLocale());
             throw new ServiceException(message);
         }
 
