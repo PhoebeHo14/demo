@@ -1,9 +1,9 @@
 package com.example.demo.schedule;
 
+import com.example.demo.controller.pojo.WorkTimeDo;
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import com.example.demo.dao.repository.pojo.CheckInDo;
-import com.example.demo.controller.pojo.WorkTimeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.concurrent.*;
 
 @Configuration
 @Component
@@ -24,9 +25,12 @@ public class QuartzTask {
     WorkTimeRepository workTimeRepository;
 
     public void calculateWorkTime() {
-        List<CheckInDo> checkInDoList = checkInRepository.findByCheckInDate(LocalDate.now());
+        System.out.println("****** calculateWorkTime ******");
+        List<CheckInDo> checkInDtoList = checkInRepository.findByCheckInDate(LocalDate.now());
 
-        for (CheckInDo checkInDo : checkInDoList) {
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+
+        for (CheckInDo checkInDo : checkInDtoList) {
             LocalDateTime checkOutTime = checkInDo.getCheckOutTime();
 
             if (checkOutTime == null) {
@@ -34,19 +38,29 @@ public class QuartzTask {
             }
 
             LocalDateTime checkInTime = checkInDo.getCheckInTime();
+            Integer accountId = checkInDo.getAccountId();
 
-            Long workMinutes = ChronoUnit.MINUTES.between(checkInTime, checkOutTime);  //todo need decimal point
-            float workTime = ((float)workMinutes)/60;
+            CompletableFuture.runAsync(() -> {
+                long workMinutes = ChronoUnit.MINUTES.between(checkInTime, checkOutTime);
+                float workTime = ((float) workMinutes) / 60;
 
-            WorkTimeDto workTimeDto = new WorkTimeDto();
-            workTimeDto.setAccountId(checkInDo.getAccountId());
-            workTimeDto.setWorkTime(workTime);
+                WorkTimeDo workTimeDo = new WorkTimeDo();
+                workTimeDo.setAccountId(accountId);
+                workTimeDo.setWorkTime(workTime);
 
-            System.out.println("work time not calculated");
+                workTimeRepository.save(workTimeDo);
 
-            workTimeRepository.save(workTimeDto);
+                System.out.println("accountId: " + accountId + " Calculating work time......" + LocalDateTime.now());
 
-            System.out.println("work time calculated");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                
+                System.out.println("accountId: " + accountId + " Work time calculated!!!" + LocalDateTime.now());
+
+            }, executor);
         }
     }
 }

@@ -21,7 +21,7 @@ public class LoginService {
     private final BCryptPasswordEncoder encode;
     @Value("${jwt.secret}")
     String secret;
-    MessageSource messageSource;
+    private final MessageSource messageSource;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
 

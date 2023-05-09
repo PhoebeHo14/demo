@@ -11,7 +11,7 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Entity(name = "work_time")
-public class WorkTimeDto {
+public class WorkTimeDo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
