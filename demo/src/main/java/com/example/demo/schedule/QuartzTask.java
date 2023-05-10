@@ -25,10 +25,9 @@ public class QuartzTask {
     WorkTimeRepository workTimeRepository;
 
     public void calculateWorkTime() {
-        System.out.println("****** calculateWorkTime ******");
         List<CheckInDo> checkInDtoList = checkInRepository.findByCheckInDate(LocalDate.now());
 
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
 
         for (CheckInDo checkInDo : checkInDtoList) {
             LocalDateTime checkOutTime = checkInDo.getCheckOutTime();
@@ -49,17 +48,6 @@ public class QuartzTask {
                 workTimeDo.setWorkTime(workTime);
 
                 workTimeRepository.save(workTimeDo);
-
-                System.out.println("accountId: " + accountId + " Calculating work time......" + LocalDateTime.now());
-
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                
-                System.out.println("accountId: " + accountId + " Work time calculated!!!" + LocalDateTime.now());
-
             }, executor);
         }
     }

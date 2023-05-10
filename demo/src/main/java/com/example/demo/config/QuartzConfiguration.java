@@ -35,7 +35,7 @@ public class QuartzConfiguration {
 
     @Bean
     public CronTriggerFactoryBean jobTrigger(JobDetail calculateWorkTimeJobDetail) {
-        String cron = "0/20 0/1 * * * ? ";
+        String cron = "0 0 23 * * ? *";
         CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
         trigger.setJobDetail(calculateWorkTimeJobDetail);
         trigger.setCronExpression(cron);
