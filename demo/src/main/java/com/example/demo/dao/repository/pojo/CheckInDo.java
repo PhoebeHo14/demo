@@ -20,6 +20,6 @@ public class CheckInDo {
     private Integer id;
     private Integer accountId;
     private LocalDateTime checkInTime;
-    private LocalDateTime checkOutTime;
+    private Integer type;
     private LocalDate checkInDate;
 }

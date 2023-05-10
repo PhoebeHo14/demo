@@ -20,16 +20,11 @@ public class CheckInService {
     private final MessageSource messageSource;
 
     public ResponseDto<String> start(String userId) {
-        Integer id = Integer.valueOf(userId);
-
-        if (isAlreadyCheckIn(id, LocalDate.now())) {
-            String message = messageSource.getMessage("already.check.in", null, LocaleContextHolder.getLocale());
-            throw new ServiceException(message);
-        }
 
         CheckInDo checkInDo = new CheckInDo();
-        checkInDo.setAccountId(id);
+        checkInDo.setAccountId(Integer.valueOf(userId));
         checkInDo.setCheckInTime(LocalDateTime.now());
+        checkInDo.setType(1);
         checkInDo.setCheckInDate(LocalDate.now());
 
         checkInRepository.save(checkInDo);
@@ -42,7 +37,4 @@ public class CheckInService {
         return responseDto;
     }
 
-    private boolean isAlreadyCheckIn(Integer id, LocalDate date) {
-        return checkInRepository.findByAccountIdAndCheckInDate(id, date) != null;
-    }
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,5 +19,6 @@ public class WorkTimeDo {
     private Integer id;
     private Integer accountId;
     private float workTime;
+    private LocalDate checkInDate;
 
 }

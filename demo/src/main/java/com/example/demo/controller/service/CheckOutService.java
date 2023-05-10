@@ -20,16 +20,12 @@ public class CheckOutService {
     private final MessageSource messageSource;
 
     public ResponseDto<String> start(String userId) {
-        Integer id = Integer.valueOf(userId);
-        CheckInDo checkInDo = checkInRepository.findByAccountIdAndCheckInDate(id, LocalDate.now());
 
-        if (checkInDo == null) {
-            String message = messageSource.getMessage("not.check.in", null, LocaleContextHolder.getLocale());
-            throw new ServiceException(message);
-        }
-
-        checkInDo.setCheckOutTime(LocalDateTime.now());
-
+        CheckInDo checkInDo = new CheckInDo();
+        checkInDo.setAccountId(Integer.valueOf(userId));
+        checkInDo.setCheckInTime(LocalDateTime.now());
+        checkInDo.setType(0);
+        checkInDo.setCheckInDate(LocalDate.now());
         checkInRepository.save(checkInDo);
 
         ResponseDto<String> responseDto = new ResponseDto<>();

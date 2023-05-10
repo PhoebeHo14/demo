@@ -12,14 +12,16 @@ CREATE TABLE check_in (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   account_id INT NOT NULL,
   check_in_time timestamp NOT NULL,
-  check_out_time timestamp,
+  type int NOT NULL,
   check_in_date timestamp NOT NULL
 );
 
 CREATE TABLE work_time (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	account_id INT NOT NULL,
-    work_time BIGINT
+    work_time BIGINT,
+    check_in_date timestamp NOT NULL,
+    UNIQUE (account_id, check_in_date)
 );
 
 
