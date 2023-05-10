@@ -4,6 +4,7 @@ import com.example.demo.controller.pojo.WorkTimeDo;
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ScheduleTask {
 
     private final CheckInRepository checkInRepository;
@@ -42,9 +44,10 @@ public class ScheduleTask {
 
                     workTimeRepository.save(workTimeDo);
                 } else {
-                    String message = "No check-in or check-out records found for account " + accountId + " on " + LocalDate.now();
+                    log.info("No check-in or check-out records found for account " + accountId + " on " + LocalDate.now());
                 }
             }, executor);
         }
+        log.info("Work hours calculation completed");
     }
 }
