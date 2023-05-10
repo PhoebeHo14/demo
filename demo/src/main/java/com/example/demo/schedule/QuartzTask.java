@@ -4,6 +4,7 @@ import com.example.demo.controller.pojo.WorkTimeDo;
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import com.example.demo.dao.repository.pojo.CheckInDo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -18,11 +19,11 @@ import java.util.concurrent.*;
 @Configuration
 @Component
 @EnableScheduling
+@RequiredArgsConstructor
 public class QuartzTask {
-    @Autowired
-    CheckInRepository checkInRepository;
-    @Autowired
-    WorkTimeRepository workTimeRepository;
+
+    private final CheckInRepository checkInRepository;
+    private final WorkTimeRepository workTimeRepository;
 
     public void calculateWorkTime() {
         List<CheckInDo> checkInDtoList = checkInRepository.findByCheckInDate(LocalDate.now());
