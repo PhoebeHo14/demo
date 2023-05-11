@@ -24,7 +24,7 @@ public class ScheduleTask {
     private final WorkTimeRepository workTimeRepository;
     private final ThreadPoolTaskExecutor executor;
 
-    @Scheduled(cron = "0/10 * * * * ? ")
+    @Scheduled(cron = "0/20 * * * * ? ")
     public void calculateWorkTime() {
         List<Integer> accountIds = checkInRepository.findDistinctAccountIds(LocalDate.now());
 
@@ -33,6 +33,8 @@ public class ScheduleTask {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
                 LocalDateTime latestCheckOut = checkInRepository.findLatestCheckOut(accountId, LocalDate.now());
 
+                System.out.println("accountID: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckOut: " + latestCheckOut + "  " + LocalDateTime.now());
+
                 if (earliestCheckIn != null && latestCheckOut != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckOut);
 
@@ -40,6 +42,18 @@ public class ScheduleTask {
                     workTimeDo.setAccountId(accountId);
                     workTimeDo.setWorkTime(workMinutes);
                     workTimeDo.setCheckInDate(LocalDate.now());
+
+                    log.info("This is Slf4j INFO !!!");
+                    log.debug("This is Slf4j DEBUG !!!");
+                    log.error("This is Slf4j ERROR !!!");
+
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    System.out.println("accountID: " + accountId + " calculate complete!!!"  + "  " + LocalDateTime.now());
 
                     workTimeRepository.save(workTimeDo);
                 }
