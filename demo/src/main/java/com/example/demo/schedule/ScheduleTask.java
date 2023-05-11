@@ -5,6 +5,7 @@ import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -33,29 +34,17 @@ public class ScheduleTask {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
                 LocalDateTime latestCheckOut = checkInRepository.findLatestCheckOut(accountId, LocalDate.now());
 
-                System.out.println("accountID: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckOut: " + latestCheckOut + "  " + LocalDateTime.now());
-
                 if (earliestCheckIn != null && latestCheckOut != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckOut);
 
-                    WorkTimeDo workTimeDo = new WorkTimeDo();
-                    workTimeDo.setAccountId(accountId);
-                    workTimeDo.setWorkTime(workMinutes);
-                    workTimeDo.setCheckInDate(LocalDate.now());
+                    if (!workTimeRepository.existsByAccountIdAndCheckInDate(accountId, LocalDate.now())) {
+                        WorkTimeDo workTimeDo = new WorkTimeDo();
+                        workTimeDo.setAccountId(accountId);
+                        workTimeDo.setWorkTime(workMinutes);
+                        workTimeDo.setCheckInDate(LocalDate.now());
 
-                    log.info("This is Slf4j INFO !!!");
-                    log.debug("This is Slf4j DEBUG !!!");
-                    log.error("This is Slf4j ERROR !!!");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                        workTimeRepository.save(workTimeDo);
                     }
-
-                    System.out.println("accountID: " + accountId + " calculate complete!!!"  + "  " + LocalDateTime.now());
-
-                    workTimeRepository.save(workTimeDo);
                 }
             }, executor);
         }
