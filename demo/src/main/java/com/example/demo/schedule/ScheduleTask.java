@@ -35,16 +35,13 @@ public class ScheduleTask {
 
                 if (earliestCheckIn != null && latestCheckOut != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckOut);
-                    float workTime = ((float) workMinutes) / 60;
 
                     WorkTimeDo workTimeDo = new WorkTimeDo();
                     workTimeDo.setAccountId(accountId);
-                    workTimeDo.setWorkTime(workTime);
+                    workTimeDo.setWorkTime(workMinutes);
                     workTimeDo.setCheckInDate(LocalDate.now());
 
                     workTimeRepository.save(workTimeDo);
-                } else {
-                    log.info("No check-in or check-out records found for account " + accountId + " on " + LocalDate.now());
                 }
             }, executor);
         }
