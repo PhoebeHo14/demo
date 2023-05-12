@@ -27,11 +27,11 @@ public class RegisterService {
 
         if (isAccountExist(memberAccountDto)) {
             String message = messageSource.getMessage("account.duplicate", null, LocaleContextHolder.getLocale());
-            log.info("Access Log - {} - {} - {}", LocalDateTime.now(), "username:" + memberAccountDto.getUsername(), "Username already exists");
+            log.info("Access Log - {} - {}", "username:" + memberAccountDto.getUsername(), "Username already exists");
             throw new ServiceException(message);
         }
 
-        log.info("Access Log - {} - {} - {}", LocalDateTime.now(), "username:" + memberAccountDto.getUsername(), "Register success");
+        log.info("Access Log - {} - {}", "username:" + memberAccountDto.getUsername(), "Register success");
         return saveAccount(memberAccountDto);
     }
 

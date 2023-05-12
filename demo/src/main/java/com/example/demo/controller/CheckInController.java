@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.service.CheckInFailService;
 import com.example.demo.controller.service.CheckInService;
 import com.example.demo.controller.service.CheckOutService;
 import com.example.demo.controller.pojo.ResponseDto;
@@ -17,6 +18,7 @@ public class CheckInController {
 
     private final CheckInService checkInService;
     private final CheckOutService checkOutService;
+    private final CheckInFailService checkInFailService;
 
     @PostMapping("/check-in")
     @SecurityRequirement(name = "token")
@@ -28,5 +30,11 @@ public class CheckInController {
     @SecurityRequirement(name = "token")
     public ResponseDto<String> checkOut(@AuthenticationPrincipal String userDetails) {
         return checkOutService.start(userDetails);
+    }
+
+    @PostMapping("/check-in-fail")
+    @SecurityRequirement(name = "token")
+    public ResponseDto<String> checkInFail(@AuthenticationPrincipal String userDetails) {
+        return checkInFailService.start(userDetails);
     }
 }
