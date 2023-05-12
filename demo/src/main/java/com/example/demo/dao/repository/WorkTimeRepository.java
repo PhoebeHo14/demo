@@ -9,6 +9,5 @@ import java.time.LocalDate;
 @Repository
 public interface WorkTimeRepository extends JpaRepository<WorkTimeDo, Integer> {
     WorkTimeDo save(WorkTimeDo workTimeDo);
-    boolean existsByAccountIdAndCheckInDate(Integer accountId, LocalDate checkInDate);
-
+    WorkTimeDo findByAccountIdAndCheckInDate(Integer accountId, LocalDate checkInDate);
 }
