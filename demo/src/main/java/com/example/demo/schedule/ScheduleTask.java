@@ -5,7 +5,6 @@ import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -36,7 +35,7 @@ public class ScheduleTask {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
                 LocalDateTime latestCheckOut = checkInRepository.findLatestCheckOut(accountId, LocalDate.now());
 
-                System.out.println("accountID: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckOut: " + latestCheckOut + "  " + LocalDateTime.now());
+                System.out.println("accountId: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckOut: " + latestCheckOut + "  " + LocalDateTime.now());
 
                 if (earliestCheckIn != null && latestCheckOut != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckOut);
@@ -45,7 +44,7 @@ public class ScheduleTask {
                     if (existingRecord != null) {
                         existingRecord.setWorkTime(workMinutes);
                         workTimeRepository.save(existingRecord);
-                        System.out.println("accountID: " + accountId + " record overwrited!!!");
+                        System.out.println("accountId: " + accountId + " record overWrite!!!");
                     } else {
                         WorkTimeDo workTimeDo = new WorkTimeDo();
                         workTimeDo.setAccountId(accountId);
@@ -61,7 +60,7 @@ public class ScheduleTask {
                     throw new RuntimeException(e);
                 }
 
-                System.out.println("accountID: " + accountId + " calculate complete!!!" + "  " + LocalDateTime.now());
+                System.out.println("accountId: " + accountId + " calculate complete!!!" + "  " + LocalDateTime.now());
 
             }, taskExecutor);
 

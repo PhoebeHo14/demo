@@ -6,13 +6,17 @@ import com.example.demo.dao.repository.MemberAccountRepository;
 import com.example.demo.dao.repository.pojo.MemberAccountDo;
 import com.example.demo.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class RegisterService {
 
     private final MemberAccountRepository memberAccountRepository;
@@ -23,9 +27,11 @@ public class RegisterService {
 
         if (isAccountExist(memberAccountDto)) {
             String message = messageSource.getMessage("account.duplicate", null, LocaleContextHolder.getLocale());
+            log.info("Access Log - {} - {} - {}", LocalDateTime.now(), "username:" + memberAccountDto.getUsername(), "Username already exists");
             throw new ServiceException(message);
         }
 
+        log.info("Access Log - {} - {} - {}", LocalDateTime.now(), "username:" + memberAccountDto.getUsername(), "Register success");
         return saveAccount(memberAccountDto);
     }
 
