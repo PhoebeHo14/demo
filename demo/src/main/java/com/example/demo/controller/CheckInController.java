@@ -4,6 +4,7 @@ import com.example.demo.controller.service.CheckInFailService;
 import com.example.demo.controller.service.CheckInService;
 import com.example.demo.controller.service.CheckOutService;
 import com.example.demo.controller.pojo.ResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,13 @@ public class CheckInController {
     private final CheckInFailService checkInFailService;
 
     @PostMapping("/check-in")
-    @SecurityRequirement(name = "token")
+    @Operation(summary = "上班打卡", description = "需先登入")
     public ResponseDto<String> checkIn(@AuthenticationPrincipal String userDetails) {
         return checkInService.start(userDetails);
     }
 
     @PostMapping("/check-out")
-    @SecurityRequirement(name = "token")
+    @Operation(summary = "下班打卡", description = "需先登入")
     public ResponseDto<String> checkOut(@AuthenticationPrincipal String userDetails) {
         return checkOutService.start(userDetails);
     }

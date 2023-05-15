@@ -18,7 +18,8 @@ import org.springframework.context.annotation.Configuration;
         scheme = "bearer",
         in = SecuritySchemeIn.HEADER
 )
-@OpenAPIDefinition(info = @Info(title = "Phoebe Training", version = "1.0.0"))
+@OpenAPIDefinition(info = @Info(title = "Phoebe Training", version = "1.0.0"),
+        security = @SecurityRequirement(name = "token"))
 public class SwaggerConfiguration {
 
 }

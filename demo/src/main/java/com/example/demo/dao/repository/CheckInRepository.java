@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface CheckInRepository extends JpaRepository<CheckInDo, Integer> {
-    CheckInDo save(CheckInDo checkInDo);
+
     @Query("SELECT MIN(c.checkInTime) FROM check_in c WHERE c.accountId = :accountId AND c.type = 1 AND c.checkInDate = :localDate")
     LocalDateTime findEarliestCheckIn(@Param("accountId") Integer accountId, @Param("localDate") LocalDate localDate);
 
