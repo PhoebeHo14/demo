@@ -39,7 +39,6 @@ public class MemberAccountController {
     }
 
     @PostMapping("/update-password")
-    @SecurityRequirement(name = "token")
     @Operation(summary = "修改密碼", description = "修改密碼請先登入")
     public ResponseDto<String> updatePassword(@AuthenticationPrincipal String userDetails, @RequestBody UpdatePasswordDto updatePasswordDto) {
         return updatePasswordService.start(userDetails, updatePasswordDto);

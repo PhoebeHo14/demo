@@ -19,13 +19,11 @@ public class CheckInController {
     private final CheckOutService checkOutService;
 
     @PostMapping("/check-in")
-    @SecurityRequirement(name = "token")
     public ResponseDto<String> checkIn(@AuthenticationPrincipal String userDetails) {
         return checkInService.start(userDetails);
     }
 
     @PostMapping("/check-out")
-    @SecurityRequirement(name = "token")
     public ResponseDto<String> checkOut(@AuthenticationPrincipal String userDetails) {
         return checkOutService.start(userDetails);
     }
