@@ -8,6 +8,6 @@ import java.time.LocalDate;
 
 @Repository
 public interface WorkTimeRepository extends JpaRepository<WorkTimeDo, Integer> {
-    WorkTimeDo save(WorkTimeDo workTimeDo);
+
     WorkTimeDo findByAccountIdAndCheckInDate(Integer accountId, LocalDate checkInDate);
 }

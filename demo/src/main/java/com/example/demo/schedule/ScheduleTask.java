@@ -5,7 +5,6 @@ import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.WorkTimeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
@@ -45,7 +44,6 @@ public class ScheduleTask {
                     if (existingRecord != null) {
                         existingRecord.setWorkTime(workMinutes);
                         workTimeRepository.save(existingRecord);
-                        System.out.println("accountID: " + accountId + " record overwrited!!!");
                     } else {
                         WorkTimeDo workTimeDo = new WorkTimeDo();
                         workTimeDo.setAccountId(accountId);
@@ -67,7 +65,7 @@ public class ScheduleTask {
 
             futures.add(future);
         }
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         log.info("Work hours calculation completed");
     }
 }

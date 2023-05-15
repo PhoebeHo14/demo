@@ -1,7 +1,6 @@
 package com.example.demo.controller.service;
 
 import com.example.demo.dao.repository.CheckInRepository;
-import com.example.demo.exception.ServiceException;
 import com.example.demo.dao.repository.pojo.CheckInDo;
 import com.example.demo.controller.pojo.ResponseDto;
 import lombok.RequiredArgsConstructor;

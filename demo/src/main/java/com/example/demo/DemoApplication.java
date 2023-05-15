@@ -14,8 +14,6 @@ public class DemoApplication {
         System.setProperty("spring.mvc.pathmatch.matching-strategy", "ANT_PATH_MATCHER");
         System.setProperty("spring.jpa.database-platform", "org.hibernate.dialect.MySQL8Dialect");
         System.setProperty("spring.jpa.hibernate.ddl-auto", "none");
-        System.setProperty("spring.jpa.properties.hibernate.show_sql", "true");
-        System.setProperty("spring.jpa.properties.hibernate.format_sql", "true");
         System.setProperty("mybatis.mapper-locations", "classpath:mappers/*.xml");
         System.setProperty("springdoc.swagger-ui.path", "/swagger-ui.html");
 
