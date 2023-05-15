@@ -3,6 +3,7 @@ package com.example.demo.controller.service;
 import com.example.demo.dao.repository.CheckInRepository;
 import com.example.demo.dao.repository.pojo.CheckInDo;
 import com.example.demo.controller.pojo.ResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
