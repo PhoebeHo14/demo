@@ -44,7 +44,6 @@ public class ScheduleTask {
                     if (existingRecord != null) {
                         existingRecord.setWorkTime(workMinutes);
                         workTimeRepository.save(existingRecord);
-                        System.out.println("accountId: " + accountId + " record overWrite!!!");
                     } else {
                         WorkTimeDo workTimeDo = new WorkTimeDo();
                         workTimeDo.setAccountId(accountId);
