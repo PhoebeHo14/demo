@@ -13,12 +13,12 @@ import java.util.List;
 @Repository
 public interface CheckInRepository extends JpaRepository<CheckInDo, Integer> {
 
-    @Query("SELECT MIN(c.checkInTime) FROM check_in c WHERE c.accountId = :accountId AND c.type = 1 AND c.checkInDate = :localDate")
+    @Query("SELECT MIN(c.checkInTime) FROM check_in c WHERE c.accountId = :accountId AND DATE(c.checkInTime) = DATE(:localDate)")
     LocalDateTime findEarliestCheckIn(@Param("accountId") Integer accountId, @Param("localDate") LocalDate localDate);
 
-    @Query("SELECT MAX(c.checkInTime) FROM check_in c WHERE c.accountId = :accountId AND c.type = 0 AND c.checkInDate = :localDate")
-    LocalDateTime findLatestCheckOut(@Param("accountId") Integer accountId, @Param("localDate") LocalDate localDate);
+    @Query("SELECT MAX(c.checkInTime) FROM check_in c WHERE c.accountId = :accountId AND DATE(c.checkInTime) = DATE(:localDate)")
+    LocalDateTime findLatestCheckIn(@Param("accountId") Integer accountId, @Param("localDate") LocalDate localDate);
 
-    @Query("SELECT DISTINCT c.accountId FROM check_in c WHERE c.checkInDate = :localDate")
+    @Query("SELECT DISTINCT c.accountId FROM check_in c WHERE DATE(c.checkInTime) = DATE(:localDate)")
     List<Integer> findDistinctAccountIds(@Param("localDate") LocalDate localDate);
 }

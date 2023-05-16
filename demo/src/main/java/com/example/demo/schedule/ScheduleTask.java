@@ -33,12 +33,12 @@ public class ScheduleTask {
         for (Integer accountId : accountIds) {
             CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
-                LocalDateTime latestCheckOut = checkInRepository.findLatestCheckOut(accountId, LocalDate.now());
+                LocalDateTime latestCheckIn = checkInRepository.findLatestCheckIn(accountId, LocalDate.now());
 
-                System.out.println("accountId: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckOut: " + latestCheckOut + "  " + LocalDateTime.now());
+                System.out.println("accountID: " + accountId + ",earliestCheckIn: " + earliestCheckIn + ", latestCheckIn: " + latestCheckIn + "  " + LocalDateTime.now());
 
-                if (earliestCheckIn != null && latestCheckOut != null) {
-                    long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckOut);
+                if (earliestCheckIn != null && latestCheckIn != null) {
+                    long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckIn);
 
                     WorkTimeDo existingRecord = workTimeRepository.findByAccountIdAndCheckInDate(accountId, LocalDate.now());
                     if (existingRecord != null) {

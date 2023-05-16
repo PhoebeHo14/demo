@@ -2,10 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.controller.service.CheckInFailService;
 import com.example.demo.controller.service.CheckInService;
-import com.example.demo.controller.service.CheckOutService;
 import com.example.demo.controller.pojo.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
