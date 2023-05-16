@@ -25,15 +25,12 @@ public class CheckInService {
     public ResponseDto<String> start(String id) {
         Integer userId = Integer.valueOf(id);
         LocalDateTime checkInTime = LocalDateTime.now();
-        LocalDate checkInDate = LocalDate.now();
         MemberAccountDo memberAccountDo = memberAccountRepository.getReferenceById(userId);
         log.info("Accessing start() method - username: {} - checkInTime: {} - {}", memberAccountDo.getUsername(), checkInTime, "Check in attempt");
 
         CheckInDo checkInDo = new CheckInDo();
         checkInDo.setAccountId(userId);
         checkInDo.setCheckInTime(checkInTime);
-        checkInDo.setType(1);
-        checkInDo.setCheckInDate(checkInDate);
 
         checkInRepository.save(checkInDo);
 

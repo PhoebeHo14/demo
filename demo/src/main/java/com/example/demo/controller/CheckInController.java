@@ -16,19 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CheckInController {
 
     private final CheckInService checkInService;
-    private final CheckOutService checkOutService;
     private final CheckInFailService checkInFailService;
 
     @PostMapping("/check-in")
     @Operation(summary = "上班打卡", description = "需先登入")
     public ResponseDto<String> checkIn(@AuthenticationPrincipal String userDetails) {
         return checkInService.start(userDetails);
-    }
-
-    @PostMapping("/check-out")
-    @Operation(summary = "下班打卡", description = "需先登入")
-    public ResponseDto<String> checkOut(@AuthenticationPrincipal String userDetails) {
-        return checkOutService.start(userDetails);
     }
 
     @PostMapping("/check-in-fail")

@@ -31,8 +31,6 @@ public class CheckInFailService {
         CheckInDo checkInDo = new CheckInDo();
         checkInDo.setAccountId(userId);
         checkInDo.setCheckInTime(LocalDateTime.now());
-        checkInDo.setType(1);
-        checkInDo.setCheckInDate(LocalDate.now());
 
         checkInRepository.save(checkInDo);
 
