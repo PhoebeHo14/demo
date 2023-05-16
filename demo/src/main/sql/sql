@@ -11,7 +11,9 @@ CREATE TABLE account (
 CREATE TABLE check_in (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   account_id INT NOT NULL,
-  check_in_time timestamp NOT NULL
+  check_in_time TIMESTAMP NOT NULL,
+  INDEX idx_account_id (account_id),
+  INDEX idx_check_in_time (check_in_time)
 );
 
 CREATE TABLE work_time (
