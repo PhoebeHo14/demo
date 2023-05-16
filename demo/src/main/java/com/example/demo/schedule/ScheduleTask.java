@@ -65,7 +65,7 @@ public class ScheduleTask {
 
             futures.add(future);
         }
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).join();
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
         log.info("Work hours calculation completed");
     }
 }

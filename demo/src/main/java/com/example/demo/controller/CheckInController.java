@@ -34,7 +34,7 @@ public class CheckInController {
     }
 
     @PostMapping("/check-in-fail")
-    @SecurityRequirement(name = "token")
+    @Operation(summary = "必定失敗的打卡", description = "需先登入")
     public ResponseDto<String> checkInFail(@AuthenticationPrincipal String userDetails) {
         return checkInFailService.start(userDetails);
     }

@@ -12,8 +12,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -24,14 +22,13 @@ public class RegisterService {
     private final MessageSource messageSource;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
+        log.info("Accessing start() method - username: {} - {}", memberAccountDto.getUsername(), "Register attempt");
 
         if (isAccountExist(memberAccountDto)) {
             String message = messageSource.getMessage("account.duplicate", null, LocaleContextHolder.getLocale());
-            log.info("Access Log - {} - {}", "username:" + memberAccountDto.getUsername(), "Username already exists");
             throw new ServiceException(message);
         }
 
-        log.info("Access Log - {} - {}", "username:" + memberAccountDto.getUsername(), "Register success");
         return saveAccount(memberAccountDto);
     }
 

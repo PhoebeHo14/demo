@@ -8,13 +8,10 @@ import com.example.demo.dao.repository.pojo.MemberAccountDo;
 import com.example.demo.exception.ServiceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,18 +21,22 @@ public class CheckInFailService {
     private final CheckInRepository checkInRepository;
     private final MemberAccountRepository memberAccountRepository;
 
-    public ResponseDto<String> start(String userId) {
+    public ResponseDto<String> start(String id) {
+        Integer userId = Integer.valueOf(id);
+        MemberAccountDo memberAccountDo = memberAccountRepository.getReferenceById(userId);
+        String username = memberAccountDo.getUsername();
+
+        log.debug("Starting check-in for user with username: {}", username);
 
         CheckInDo checkInDo = new CheckInDo();
-        checkInDo.setAccountId(Integer.valueOf(userId));
+        checkInDo.setAccountId(userId);
         checkInDo.setCheckInTime(LocalDateTime.now());
         checkInDo.setType(1);
         checkInDo.setCheckInDate(LocalDate.now());
 
         checkInRepository.save(checkInDo);
 
-//        memberAccountRepository.findById(Integer.parseInt(userId));
-        log.error("Access Log - {} - {}", "userId:" + userId, "Check in failed");
+        log.error("username: {} - {}", username, "Error occurred during check-in");
 
         throw new ServiceException("Check in failed");
     }

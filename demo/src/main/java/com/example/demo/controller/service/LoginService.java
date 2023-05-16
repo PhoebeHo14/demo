@@ -7,6 +7,7 @@ import com.example.demo.controller.pojo.MemberAccountDto;
 import com.example.demo.controller.pojo.ResponseDto;
 import com.example.demo.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoginService {
 
     private final MemberAccountMapper memberAccountMapper;
@@ -24,6 +26,7 @@ public class LoginService {
     private final MessageSource messageSource;
 
     public ResponseDto<String> start(MemberAccountDto memberAccountDto) {
+        log.info("Accessing start() method - username: {} - {}", memberAccountDto.getUsername(), "Login attempt");
 
         MemberAccountDo account = memberAccountMapper.findByUsername(memberAccountDto.getUsername());
         if (account == null) {

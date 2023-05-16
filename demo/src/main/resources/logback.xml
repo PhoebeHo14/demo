@@ -7,9 +7,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/Info.log</file>
+        <file>log/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>log/info.log.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -23,9 +23,9 @@
     </appender>
 
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>log/Error.log</file>
+        <file>log/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/application_error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>log/error.log.%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -38,7 +38,7 @@
         </encoder>
     </appender>
 
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
         <appender-ref ref="ERROR"/>

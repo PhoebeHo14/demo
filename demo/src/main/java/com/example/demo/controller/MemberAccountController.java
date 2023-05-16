@@ -7,7 +7,6 @@ import com.example.demo.controller.service.LoginService;
 import com.example.demo.controller.service.RegisterService;
 import com.example.demo.controller.service.UpdatePasswordService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
