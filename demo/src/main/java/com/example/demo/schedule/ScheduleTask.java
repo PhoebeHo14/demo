@@ -37,7 +37,7 @@ public class ScheduleTask {
 
                 String threadName = Thread.currentThread().getName();
 
-                log.info("accountId: {} - Current thread name: {} - Work time calculating...... ", accountId, threadName);
+                log.info("accountId: {} - Work time calculating...... ", accountId);
 
                 if (earliestCheckIn != null && latestCheckIn != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckIn);
@@ -61,7 +61,7 @@ public class ScheduleTask {
                     throw new RuntimeException(e);
                 }
 
-                log.info("accountId: {} - Current thread name: {} - Calculate complete!!! ", accountId, threadName);
+                log.info("accountId: {} - Calculate complete!!! ", accountId);
 
             }, taskExecutor);
 
