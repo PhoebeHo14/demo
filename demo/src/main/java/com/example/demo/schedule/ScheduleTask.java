@@ -35,8 +35,6 @@ public class ScheduleTask {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
                 LocalDateTime latestCheckIn = checkInRepository.findLatestCheckIn(accountId, LocalDate.now());
 
-                String threadName = Thread.currentThread().getName();
-
                 log.info("accountId: {} - Work time calculating...... ", accountId);
 
                 if (earliestCheckIn != null && latestCheckIn != null) {
