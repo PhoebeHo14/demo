@@ -18,7 +18,7 @@ public class WorkTimeDo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer accountId;
-    private float workTime;
+    private float workMinute;
     private LocalDate checkInDate;
 
 }

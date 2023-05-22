@@ -42,12 +42,12 @@ public class ScheduleTask {
 
                     WorkTimeDo existingRecord = workTimeRepository.findByAccountIdAndCheckInDate(accountId, LocalDate.now());
                     if (existingRecord != null) {
-                        existingRecord.setWorkTime(workMinutes);
+                        existingRecord.setWorkMinute(workMinutes);
                         workTimeRepository.save(existingRecord);
                     } else {
                         WorkTimeDo workTimeDo = new WorkTimeDo();
                         workTimeDo.setAccountId(accountId);
-                        workTimeDo.setWorkTime(workMinutes);
+                        workTimeDo.setWorkMinute(workMinutes);
                         workTimeDo.setCheckInDate(LocalDate.now());
                         workTimeRepository.save(workTimeDo);
                     }
