@@ -12,6 +12,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CheckInService {
     public ResponseDto<String> start(String id) {
         Integer userId = Integer.valueOf(id);
         LocalDateTime checkInTime = LocalDateTime.now();
-        MemberAccountDo memberAccountDo = memberAccountRepository.getReferenceById(userId);
+        MemberAccountDo memberAccountDo = memberAccountRepository.findById(userId).orElseThrow();
         log.info("Accessing start() method - username: {} - checkInTime: {} - {}", memberAccountDo.getUsername(), checkInTime, "Check in attempt");
 
         CheckInDo checkInDo = new CheckInDo();
