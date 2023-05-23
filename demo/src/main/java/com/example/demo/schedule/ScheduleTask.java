@@ -35,21 +35,19 @@ public class ScheduleTask {
                 LocalDateTime earliestCheckIn = checkInRepository.findEarliestCheckIn(accountId, LocalDate.now());
                 LocalDateTime latestCheckIn = checkInRepository.findLatestCheckIn(accountId, LocalDate.now());
 
-                String threadName = Thread.currentThread().getName();
-
-                log.info("accountId: {} - Current thread name: {} - Work time calculating...... ", accountId, threadName);
+                log.info("accountId: {} - Work time calculating...... ", accountId);
 
                 if (earliestCheckIn != null && latestCheckIn != null) {
                     long workMinutes = ChronoUnit.MINUTES.between(earliestCheckIn, latestCheckIn);
 
                     WorkTimeDo existingRecord = workTimeRepository.findByAccountIdAndCheckInDate(accountId, LocalDate.now());
                     if (existingRecord != null) {
-                        existingRecord.setWorkTime(workMinutes);
+                        existingRecord.setWorkMinute(workMinutes);
                         workTimeRepository.save(existingRecord);
                     } else {
                         WorkTimeDo workTimeDo = new WorkTimeDo();
                         workTimeDo.setAccountId(accountId);
-                        workTimeDo.setWorkTime(workMinutes);
+                        workTimeDo.setWorkMinute(workMinutes);
                         workTimeDo.setCheckInDate(LocalDate.now());
                         workTimeRepository.save(workTimeDo);
                     }
@@ -61,7 +59,7 @@ public class ScheduleTask {
                     throw new RuntimeException(e);
                 }
 
-                log.info("accountId: {} - Current thread name: {} - Calculate complete!!! ", accountId, threadName);
+                log.info("accountId: {} - Calculate complete!!! ", accountId);
 
             }, taskExecutor);
 
