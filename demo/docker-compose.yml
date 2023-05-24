@@ -1,0 +1,27 @@
+version: '3'
+services:
+  mysql:
+    image: mysql
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - 13306:3306
+    volumes:
+      - C:\mount:/var/lib/mysql
+    networks:
+      - my-network
+
+  demo:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: demo-container
+    ports:
+      - 8080:8080
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
