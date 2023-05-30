@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: web-app
-          image: phoebeho14/demo:1.0.0
+          image: phoebeho14/demo:2.0.0
           ports:
             - containerPort: 8080
           env:
