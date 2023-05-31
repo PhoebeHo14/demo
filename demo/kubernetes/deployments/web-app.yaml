@@ -24,9 +24,14 @@ spec:
                 secretKeyRef:
                   name: mysql-secret
                   key: password
+            - name: TEST
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-config
+                  key: test
           volumeMounts:
             - name: config-volume
-              mountPath: /config
+              mountPath: /app/config
       volumes:
         - name: config-volume
           configMap:
